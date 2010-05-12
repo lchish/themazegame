@@ -1,10 +1,10 @@
 #include <cstdio>
 #include <cstdlib>
+#include <string>
 #include <GL/glut.h>
 
 #include "render_world.h"
-#include <iostream>
-#include <string>
+#include "texture.h"
 
 using namespace std;
 
