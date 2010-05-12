@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="themazegamevs2008"
+	Name="themazegame"
 	ProjectGUID="{E84BF2AF-3FE3-4534-9005-EDB6C4909BB7}"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
@@ -221,6 +221,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\render_world.h"
+				>
+			</File>
+			<File
 				RelativePath=".\libraries\include\gl\wglew.h"
 				>
 			</File>
@@ -246,6 +250,10 @@
 			</File>
 			<File
 				RelativePath=".\src\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\render_world.cpp"
 				>
 			</File>
 		</Filter>
