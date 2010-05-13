@@ -29,6 +29,9 @@ int x_position;
 int y_position;
 int orientation;
 
+//textures
+GLuint wall_texture;
+
 //temporary crap for testing
 void setTempMaze(void){
 	maze[0][0] = 1;
@@ -138,7 +141,6 @@ static void camera(int i, int j, int direction){
 	//gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
 }
 
-//f
 /*Draw a single floor tile*/
 void drawFloorTile(int i, int j){
 
@@ -153,63 +155,49 @@ void drawFloorTile(int i, int j){
 	glVertex3f(0.0f + i,0.0f, 0.0f + j);
 	glEnd();
 }
-
-/*Draw a single wall*/
+/*Draw a single textured wall*/
 void drawWall(int i, int j, int direction){
+	glBindTexture(GL_TEXTURE_2D,wall_texture);
+	glColor3f(1.0f,1.0f,1.0f);//reset the colour or everything is to dark
 
 	if(direction == SOUTH){
 
 		glBegin(GL_QUADS);
-		glColor3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f + i, 1.0f , 0.0f+j);
-		glColor3f(0.5f, 1.0f, 0.2f);
-		glVertex3f(1.0f + i, 1.0f , 0.0f+j);
-		glColor3f(0.1f, 0.4f, 0.2f);
-		glVertex3f(1.0f + i, 0.0f, 0.0f+j);
-		glColor3f(1.0f, 0.8f, 0.4f);
-		glVertex3f(0.0f + i, 0.0f , 0.0f+j);
+		glTexCoord2d(0.0,1.0); glVertex3f(0.0f + i, 1.0f , 0.0f+j);
+		glTexCoord2d(1.0,1.0); glVertex3f(1.0f + i, 1.0f , 0.0f+j);
+		glTexCoord2d(1.0,0.0); glVertex3f(1.0f + i, 0.0f, 0.0f+j);
+		glTexCoord2d(0.0,0.0); glVertex3f(0.0f + i, 0.0f , 0.0f+j);
 		glEnd();
 	}
 
 
-	if(direction == NORTH){
+	else if(direction == NORTH){
 
 		glBegin(GL_QUADS);
-		glColor3f(1.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f + i, 1.0f , 1.0f+j);
-		glColor3f(0.1f, 1.0f, 0.0f);
-		glVertex3f(1.0f + i, 1.0f , 1.0f+j);
-		glColor3f(0.1f, 0.9f, 0.0f);
-		glVertex3f(1.0f + i, 0.0f, 1.0f+j);
-		glColor3f(1.0f, 0.8f, 0.5f);
-		glVertex3f(0.0f + i, 0.0f , 1.0f+j);
+		glTexCoord2d(0.0,1.0); glVertex3f(0.0f + i, 1.0f , 1.0f+j);
+		glTexCoord2d(1.0,1.0); glVertex3f(1.0f + i, 1.0f , 1.0f+j);
+		glTexCoord2d(1.0,0.0); glVertex3f(1.0f + i, 0.0f, 1.0f+j);
+		glTexCoord2d(0.0,0.0); glVertex3f(0.0f + i, 0.0f , 1.0f+j);
 		glEnd();
 	}
 
 
-	if(direction == EAST){
+	else if(direction == EAST){
 
 		glBegin(GL_QUADS);
-		glVertex3f(0.0f + i, 1.0f , 0.0f + j);
-		glColor3f(0.0f + i, 0.3f, 0.2f);
-		glVertex3f(0.0f + i, 1.0f , 1.0f + j);
-		glColor3f(1.0f + i, 0.1f, 0.4f);
-		glVertex3f(0.0f + i, 0.0f , 1.0f + j);
-		glColor3f(0.2f + i, 0.2f, 0.2f);
-		glVertex3f(0.0f+ i, 0.0f , 0.0f + j);
+		glTexCoord2d(0.0,1.0);glVertex3f(0.0f + i, 1.0f , 0.0f + j);
+		glTexCoord2d(1.0,1.0);glVertex3f(0.0f + i, 1.0f , 1.0f + j);
+		glTexCoord2d(1.0,0.0);glVertex3f(0.0f + i, 0.0f , 1.0f + j);
+		glTexCoord2d(0.0,0.0);glVertex3f(0.0f+ i, 0.0f , 0.0f + j);
 		glEnd();
 	}
 
-	if(direction == WEST){
+	else if(direction == WEST){
 		glBegin(GL_QUADS);
-		glColor3f(0.6f + i, 0.3f, 0.0f);
-		glVertex3f(1.0f + i, 1.0f, 0.0f + j);
-		glColor3f(0.12f, 0.5f, 0.76f);
-		glVertex3f(1.0f + i, 1.0f , 1.0f + j);
-		glColor3f(0.2f, 0.1f, 0.9f);
-		glVertex3f(1.0f + i, 0.0f , 1.0f + j);
-		glColor3f(1.0f, 1.0f, 0.0f);
-		glVertex3f(1.0f + i, 0.0f , 0.0f + j);
+		glTexCoord2d(0.0,1.0);glVertex3f(1.0f + i, 1.0f, 0.0f + j);
+		glTexCoord2d(1.0,1.0);glVertex3f(1.0f + i, 1.0f , 1.0f + j);
+		glTexCoord2d(1.0,0.0);glVertex3f(1.0f + i, 0.0f , 1.0f + j);
+		glTexCoord2d(0.0,0.0);glVertex3f(1.0f + i, 0.0f , 0.0f + j);
 		glEnd();
 	}
 
@@ -295,7 +283,6 @@ void display(void){
 	glLoadIdentity();
 	gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
 
-
 	/*Waiting for camera function from ARUN*/
 	//camera(0, 0, NORTH);
 
@@ -320,3 +307,9 @@ void reshape (int w, int h) {
 	glMatrixMode (GL_MODELVIEW);
 }
 
+void init_textures(){
+	wall_texture = genTexture("data/images/textures/wall.bmp");
+}
+void free_textures(){
+	glDeleteTextures( 1, &wall_texture );
+}

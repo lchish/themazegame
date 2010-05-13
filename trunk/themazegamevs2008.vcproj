@@ -68,7 +68,8 @@
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-				OptimizeForWindows98="1"
+
+				OptimizeForWindows98="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -210,13 +211,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkIncremental="1"
+				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
+
+				OptimizeForWindows98="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -377,6 +381,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\menu_state.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\render_world.h"
 				>
 			</File>
@@ -409,7 +417,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\game_state.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\menu_state.cpp"
 				>
 			</File>
 			<File
