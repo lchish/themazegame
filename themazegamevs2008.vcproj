@@ -68,7 +68,6 @@
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
 				GenerateDebugInformation="true"
 				SubSystem="1"
-
 				OptimizeForWindows98="0"
 				TargetMachine="1"
 			/>
@@ -211,7 +210,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				LinkIncremental="1"
+				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
+				LinkIncremental="2"
 				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
@@ -219,7 +219,6 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-
 				OptimizeForWindows98="0"
 				TargetMachine="1"
 			/>

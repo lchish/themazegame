@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 #include <GL/glut.h>
 
 #include "game_state.h"
@@ -9,7 +20,7 @@ GLuint start_button_texture,exit_button_texture,options_button_texture,header_te
 static void init_textures(){
 }
 void key_pressed(unsigned char key,int x,int y){
-	if(key =='a'){//transition to main game state
+	if(key =='m'){//transition to main game state
 		set_game_state(GAME_STATE_NUMBER);
 	}
 }
@@ -32,4 +43,5 @@ void menu_update(){
 	 
 }
 void menu_render(){
-}
+
+}}
