@@ -102,7 +102,7 @@ void keyboardup(unsigned char key, int x, int y)
 	}
 	else if(key == 'd'){
 		turning_right_global = false;
-		printf("Right key depressed");
+	printf("Right key cvdepressed");
 	}
 
 	else if(key == 'w'){
@@ -136,9 +136,27 @@ void processNormalKeys(unsigned char key, int x, int y){
 
 }
 
-static void camera(int i, int j, int direction){
+static void camera(int x, int z, int orientation){
+	
+	if(orientation == NORTH){
+gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
+	}
 
-	//gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
+	else if(orientation == EAST){
+gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 1, 0.5, z + 0.5, 0, 1, 0); 
+	}
+
+	else if(orientation == SOUTH){
+gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
+	}
+	else if(orientation == WEST){
+gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x -1, 0.5, z + 0.5, 0, 1, 0); 
+	}
+
+	/*
+	   double angleRadians = orientation * 3.14159/180;
+    gluLookAt(x+0.5,0.5,z+0.5, x + sin(angleRadians), z + cos(angleRadians),orientation, 0,1,0);
+	*/
 }
 
 /*Draw a single floor tile*/
@@ -278,10 +296,15 @@ void idle(void){
 
 /*Display function - called from main*/
 void display(void){
+
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor (0.0,0.0,0.0,1.0);
 	glLoadIdentity();
-	gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
+
+	camera(x_position, y_position, orientation);
+	//gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
+
 
 	/*Waiting for camera function from ARUN*/
 	//camera(0, 0, NORTH);
@@ -293,7 +316,11 @@ void display(void){
 	glutPostRedisplay();
 	glFlush();
 	*/
+
+
 	glutSwapBuffers();
+
+
 }
 
 

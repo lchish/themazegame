@@ -1,3 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include <cstdio>
 #include <SOIL.h>
 #include <GL/glut.h>
@@ -34,4 +69,3 @@ GLuint genTexture(char *filename){
 	}
 	return tex_2d;
 }
-
