@@ -1,47 +1,48 @@
-
-
-
-
-
-
-
-
-
-
-
 #include <GL/glut.h>
 
 #include "game_state.h"
 #include "menu_state.h"
 #include "render_world.h"
+#include "texture.h"
 
 GLuint start_button_texture,exit_button_texture,options_button_texture,header_texture;
 
 static void init_textures(){
 }
-void key_pressed(unsigned char key,int x,int y){
+void menuKeyPressed(unsigned char key,int x,int y){
 	if(key =='m'){//transition to main game state
 		set_game_state(GAME_STATE_NUMBER);
 	}
 }
 static void menu_init_textures(){
 	//start_button = genTexture("data/images/menu/start_button.raw");
+	header_texture = genTexture("data/images/menu/title.png");
+	start_button_texture = genTexture("data/images/menu/start.png");
 }
+static void menu_free_textures(){
+	glDeleteTextures( 1, &header_texture);
+	glDeleteTextures( 1, &start_button_texture);
+}
+void menuUpdate(){
 
+}
+void menuRender(){
+	glColor3f(0.5f,0.5f,0.5f);
+	glBindTexture(GL_TEXTURE_2D,header_texture);
+	glBegin(GL_QUADS);
+		/*glTexCoord2d(0.0,0.0);*/ glVertex2f(0.0f, 0.0f);
+		/*glTexCoord2d(1.0,0.0); */glVertex2f(1.0f, 0.0f);
+		/*glTexCoord2d(0.0,1.0);*/ glVertex2f(0.0f, 1.0f);
+		/*glTexCoord2d(1.0,1.0);*/ glVertex2f(1.0f, 1.0f);
+	glEnd();
+		glBindTexture(GL_TEXTURE_2D,start_button_texture);
+}
 //sets glut to use the menus rendering things
-int menu_init(){
-	glutDisplayFunc (menu_render);
-	glutIdleFunc(menu_update);
-	glutKeyboardFunc(key_pressed);
-
-	glEnable (GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
+int menuInit(){
+	menu_init_textures();
 	return 0;
 }
-
-void menu_update(){
-	 
+int menuDeInit(){
+	menu_free_textures();
+	return 0;
 }
-void menu_render(){
-
-}}

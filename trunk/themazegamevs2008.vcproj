@@ -212,8 +212,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
 				LinkIncremental="2"
-				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
-				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
 				GenerateDebugInformation="true"
 				SubSystem="1"

@@ -8,30 +8,26 @@
 #include "game_state.h"
 #include "menu_state.h"
 #include "audio.h"
-
+int CURRENT_STATE;
 void initGl(int argc,char **argv){
+	CURRENT_STATE =-1;
 	glutInit (&argc, argv);
-    glutInitDisplayMode (GLUT_DOUBLE);
-    glutInitWindowSize (500, 500);
-    glutInitWindowPosition (100, 100);
-    glutCreateWindow ("coding on calimocho");
-	
-	//start off in menu state
-	set_game_state(MENU_STATE_NUMBER);
-	//menu_init();
-	init_textures();
-	setTempMaze();
-
-	//Game code is going into the idle function at the moment..
-	glutDisplayFunc (display);
-	glutIdleFunc(idle);
-	glutKeyboardFunc(processNormalKeys);
-	glutKeyboardUpFunc(keyboardup);
-	glutReshapeFunc (reshape);
+	glutInitDisplayMode (GLUT_DOUBLE);
+	glutInitWindowSize (500, 500);
+	glutInitWindowPosition (100, 100);
+	glutCreateWindow ("coding on calimocho");
 	glEnable (GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-    glutMainLoop ();
-	//when we exit loop consider deleting textures to make andrew happy about mememory leaks.
+	//CURRENT_STATE =-1;
+	//start off in menu state
+	set_game_state(GAME_STATE_NUMBER);
+	glutDisplayFunc (gameStateRender);
+	glutIdleFunc(gameStateUpdate);
+	glutKeyboardFunc(gameStateKeyboardFunc);
+	glutKeyboardUpFunc(gameStateKeyboardUpFunc);
+	glutReshapeFunc (gameStateReshape);
+	//Game code is going into the idle function at the moment..
+	glutMainLoop ();
 }
 int main (int argc,char **argv){
 	std::cout << "Starting Game" << std::endl;

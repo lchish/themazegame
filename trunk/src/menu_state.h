@@ -1,10 +1,9 @@
-
-
-
-
 #ifndef MENU_STATE_H
 #define MENU_STATE_H
 
-int menu_init();
-
+int menuInit();
+int menuDeInit();
+void menuUpdate();
+void menuRender();
+void menuKeyPressed(unsigned char key,int x,int y);
 #endif

@@ -102,7 +102,7 @@ void keyboardup(unsigned char key, int x, int y)
 	}
 	else if(key == 'd'){
 		turning_right_global = false;
-	printf("Right key cvdepressed");
+		printf("Right key cvdepressed");
 	}
 
 	else if(key == 'w'){
@@ -137,25 +137,25 @@ void processNormalKeys(unsigned char key, int x, int y){
 }
 
 static void camera(int x, int z, int orientation){
-	
+
 	if(orientation == NORTH){
-gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
 	}
 
 	else if(orientation == EAST){
-gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 1, 0.5, z + 0.5, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 1, 0.5, z + 0.5, 0, 1, 0); 
 	}
 
 	else if(orientation == SOUTH){
-gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
 	}
 	else if(orientation == WEST){
-gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x -1, 0.5, z + 0.5, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x -1, 0.5, z + 0.5, 0, 1, 0); 
 	}
 
 	/*
-	   double angleRadians = orientation * 3.14159/180;
-    gluLookAt(x+0.5,0.5,z+0.5, x + sin(angleRadians), z + cos(angleRadians),orientation, 0,1,0);
+	double angleRadians = orientation * 3.14159/180;
+	gluLookAt(x+0.5,0.5,z+0.5, x + sin(angleRadians), z + cos(angleRadians),orientation, 0,1,0);
 	*/
 }
 
@@ -334,9 +334,19 @@ void reshape (int w, int h) {
 	glMatrixMode (GL_MODELVIEW);
 }
 
-void init_textures(){
+static void init_textures(){
 	wall_texture = genTexture("data/images/textures/wall.bmp");
 }
-void free_textures(){
+static void free_textures(){
 	glDeleteTextures( 1, &wall_texture );
+}
+//move this out sometime people
+int gameInit(){
+	init_textures();
+	setTempMaze();
+	return 0;
+}
+int gameDeInit(){
+	free_textures();
+	return 0;
 }

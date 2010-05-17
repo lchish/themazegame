@@ -9,5 +9,6 @@ extern void reshape(int, int);
 extern void idle();
 void processNormalKeys(unsigned char key, int x, int y);
 void keyboardup(unsigned char key, int x, int y);
-void init_textures();
+int gameInit();
+int gameDeInit();
 #endif
