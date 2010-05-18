@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <cmath>
+
 #include <GL/glut.h>
 
 #include "render_world.h"
@@ -14,101 +16,129 @@ using namespace std;
 #define WEST 3
 
 //temp
-int maze[10][10];
+int maze[20][20];
 
 //temp
+/*
 int player_X;
 int player_Y;
 int player_direction;
-
+*/
 int turning_left_global;
 int turning_right_global;
 int moving_fowards_global;
 
+
 int x_position;
 int y_position;
 int orientation;
+
+
+
+int can_move = true;
 
 //textures
 GLuint wall_texture;
 
 //temporary crap for testing
 void setTempMaze(void){
-	maze[0][0] = 1;
-	maze[0][1] = 1;
-	maze[0][2] = 1;
-	maze[0][3] = 1;
-	maze[0][4] = 1;
-	maze[1][4] = 1;
-	maze[1][5] = 1;
-	maze[2][5] = 1;
-	maze[3][5] = 1;
-	maze[4][5] = 1;
-	maze[5][5] = 1;
-	maze[6][5] = 1;
-	maze[7][5] = 1;
+
+	for(int i = 0; i < 20; i++){
+		for(int j = 0; j < 20; j++){
+			maze[i][j] = 1;
+		}
+	}
+
+maze[5][6] = 0;
+
 }
 
 /*After being dragged onto calimocho i couldnt care less move and keyboard
 methods r in rendering file*/
 
 /*This method by Kirsten*/
+void move(){
 
 
-void move(int moving_forwards, int turning_left, int turning_right){
-	if(moving_forwards == 1){
-		if(orientation == 0){
-			if(y_position > 0){
-				y_position = y_position -1;
+	if(moving_fowards_global){
+		if(orientation == NORTH){
+			if(maze[x_position][y_position+1] != 1){
+printf("No");
 			}
-		}else if(orientation == 1){
-			x_position = x_position +1;
-		}else if(orientation == 2){
-			y_position = y_position +1;
-		}else {
-			if(x_position > 0){
-				x_position = x_position -1;
+			else{
+y_position++;
 			}
 		}
-
-	}else if(turning_left == 1){
-		if(orientation == 0){
-			orientation = 3;
-		}else if(orientation == 1){
-			orientation = 0;
-		}else if(orientation == 2){
-			orientation = 1;
-		}else {
-			orientation = 2;
+		if(orientation == SOUTH){
+			if(maze[x_position][y_position-1] != 1){
+				printf("No");
+			}
+			else{
+y_position--;
 		}
-	}else if(turning_right == 1){
+		}
+		if(orientation == EAST){
+			if(maze[x_position+1][y_position] != 1){
+			printf("No");
+			}
+			else{
+x_position++;
+		}
+		}
+		if(orientation == WEST){
+			if(maze[x_position-1][y_position] != 1){
+				printf("No");
+			}
+			else{
+x_position--;
+		}
+		}
+			
+	}
+
+
+	if(turning_right_global){
 		if(orientation == 0){
-			orientation = 1;
-		}else if(orientation == 1){
-			orientation = 2;
-		}else if(orientation == 2){
-			orientation = 3;
-		}else {
-			orientation = 0;
+	orientation = 3;
+		}
+		else{
+orientation--;
 		}
 	}
+	if(turning_left_global){
+		if(orientation == 3){
+orientation = 0;
+		}
+		else{
+orientation++;
+		}
+
+	}
+
+	moving_fowards_global = 0;
+	turning_left_global = 0;
+	turning_right_global = 0;
 }
+
+
+
+
 
 void keyboardup(unsigned char key, int x, int y)
 {
+	
+	printf("%c\n", key);
 	if (key == 'a'){
 		turning_left_global = false;
-		printf("Left key depressed");
 	}
 	else if(key == 'd'){
 		turning_right_global = false;
-		printf("Right key cvdepressed");
 	}
 
 	else if(key == 'w'){
-		printf("Fowards key depressed");
 		moving_fowards_global = false;
 	}
+
 }
 
 
@@ -117,22 +147,24 @@ void keyboardup(unsigned char key, int x, int y)
 /*Using WASD at the moment since I cant be fucked changing them
 to the arrow keys*/
 void processNormalKeys(unsigned char key, int x, int y){
-	printf("Processing");
 
+	printf("%c\n", key);
+	
 	if(key == 'a'){
 		turning_left_global = true;
-		printf("Left key pressed\n");
+		
 	}
 
 	else if(key == 'w'){
 		moving_fowards_global = true;
-		printf("Fowards key pressed\n");
 	}
 
 	else if(key == 'd'){
 		turning_right_global = true;
-		printf("Right key pressed\n");
 	}
+
+
+	
 
 }
 
@@ -150,13 +182,16 @@ static void camera(int x, int z, int orientation){
 		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
 	}
 	else if(orientation == WEST){
-		gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x -1, 0.5, z + 0.5, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x, 0.5, z + 0.5, 0, 1, 0); 
 	}
 
+
 	/*
-	double angleRadians = orientation * 3.14159/180;
-	gluLookAt(x+0.5,0.5,z+0.5, x + sin(angleRadians), z + cos(angleRadians),orientation, 0,1,0);
-	*/
+	        const double EYE_HEIGHT = 0.5;
+        double angleRadians = orientation * (3.14159/2);
+        gluLookAt(x + 0.5, EYE_HEIGHT, z + 0.5, x + 0.5 + cos(angleRadians), EYE_HEIGHT -
+0.2, z + 0.5 + sin(angleRadians), 0, 1, 0);
+*/
 }
 
 /*Draw a single floor tile*/
@@ -289,9 +324,19 @@ void drawWalls(void){
 
 /*Idalin*/
 void idle(void){
-	move(turning_left_global, moving_fowards_global, turning_right_global);
+
+	if(turning_left_global == true || turning_right_global == true || moving_fowards_global == true){
+
+	move();
+	}
+//printf("%d %d %d\n", turning_left_global, moving_fowards_global, turning_right_global);
+
+
 
 	glutPostRedisplay();
+
+	//printf("x: %d y: %d orient: %d\n", x_position, y_position, orientation);
+
 }
 
 /*Display function - called from main*/
@@ -342,6 +387,10 @@ static void free_textures(){
 }
 //move this out sometime people
 int gameInit(){
+
+	x_position = 1;
+	y_position = 1;
+
 	init_textures();
 	setTempMaze();
 	return 0;
