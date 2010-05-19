@@ -247,6 +247,10 @@ void drawFloorTile(int i, int j){
 }
 /*Draw a single textured wall*/
 void drawWall(int i, int j, int direction){
+
+	//printf("%d %d %d", i, j, direction);
+	
+
 	glBindTexture(GL_TEXTURE_2D,wall_texture);
 	glColor3f(1.0f,1.0f,1.0f);//reset the colour or everything is to dark
 
@@ -314,6 +318,7 @@ void drawFloor(void){
 void drawWalls(void){
 	int i, j;
 
+	drawWall(0, 1, 3);
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
 
@@ -332,6 +337,7 @@ void drawWalls(void){
 			if(maze[i][j] == 1){
 				if(maze[i-1][j] != 1){
 					drawWall(i,j,EAST);
+					//drawWall(i, j, WEST);
 				}
 			}
 		}
@@ -370,17 +376,18 @@ void idle(void){
 	}
 //printf("%d %d %d\n", turning_left_global, moving_fowards_global, turning_right_global);
 
-
-	
-
 	glutPostRedisplay();
 
-	//printf("x: %d y: %d orient: %d\n", x_position, y_position, orientation);
+	printf("x: %d y: %d orient: %d\n", x_position, y_position, orientation);
 
 }
 
 /*Display function - called from main*/
 void display(void){
+
+
+	//test
+	
 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -415,7 +422,7 @@ void reshape (int w, int h) {
 	glViewport (0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluPerspective (60, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
+	gluPerspective (75, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
 	glMatrixMode (GL_MODELVIEW);
 }
 
