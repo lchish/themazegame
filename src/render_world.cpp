@@ -16,7 +16,9 @@ using namespace std;
 #define WEST 3
 
 //temp
-int maze[20][20];
+int maze[10][10];
+
+int maze_size = 07;
 
 //temp
 /*
@@ -43,13 +45,41 @@ GLuint wall_texture;
 //temporary crap for testing
 void setTempMaze(void){
 
-	for(int i = 0; i < 20; i++){
-		for(int j = 0; j < 20; j++){
-			maze[i][j] = 1;
+
+	for(int i = 0; i < maze_size; i++){
+		for(int j = 0; j < maze_size; j++){
+			maze[i][j] = 0;
 		}
 	}
 
-maze[5][6] = 0;
+maze[1][0] = 1;
+maze[2][0] = 1;
+maze[3][0] = 1;
+maze[5][0] = 1;
+maze[6][0] = 1;
+maze[0][1] = 1;
+maze[1][1] = 1;
+maze[3][1] = 1;
+maze[5][1] = 1;
+maze[1][2] = 1;
+maze[2][2] = 1;
+maze[3][2] = 1;
+maze[4][2] = 1;
+maze[5][2] = 1;
+maze[6][2] = 1;
+maze[1][3] = 1;
+maze[3][3] = 1;
+maze[6][3] = 1;
+maze[0][4] = 1;
+maze[1][4] = 1;
+maze[2][4] = 1;
+maze[5][4] = 1;
+maze[6][4] = 1;
+maze[2][5] = 1;
+maze[3][5] = 1;
+maze[4][5] = 1;
+maze[2][6] = 1;
+
 
 }
 
@@ -114,6 +144,10 @@ orientation++;
 		}
 
 	}
+
+
+
+	printf("At: %d, %d Looking at Position:%d \n", x_position, y_position, orientation);
 
 	moving_fowards_global = 0;
 	turning_left_global = 0;
@@ -181,8 +215,11 @@ static void camera(int x, int z, int orientation){
 	else if(orientation == SOUTH){
 		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
 	}
+
+
+	///change
 	else if(orientation == WEST){
-		gluLookAt(x + 0.5, 0.5 , z + 0.5,0-x, 0.5, z + 0.5, 0, 1, 0); 
+		gluLookAt(x + 0.5, 0.5 , z + 0.5,-x-1, 0.5, z + 0.5, 0, 1, 0); 
 	}
 
 
@@ -262,8 +299,8 @@ void drawFloor(void){
 
 	int i, j;
 
-	for(i = 0; i < 10; i++){
-		for(j = 0; j < 10; j++){
+	for(i = 0; i < maze_size; i++){
+		for(j = 0; j < maze_size; j++){
 
 			if(maze[i][j] == 1){
 				drawFloorTile(i,j);
@@ -277,8 +314,8 @@ void drawFloor(void){
 void drawWalls(void){
 	int i, j;
 
-	for(i = 0; i < 10; i++){
-		for(j = 0; j < 10; j++){
+	for(i = 0; i < maze_size; i++){
+		for(j = 0; j < maze_size; j++){
 
 			if(maze[i][j] == 1){
 				if(maze[i][j+1] != 1){
@@ -290,8 +327,8 @@ void drawWalls(void){
 
 
 
-	for(i = 0; i < 10; i++){
-		for(j = 0; j < 10; j++){
+	for(i = 0; i < maze_size; i++){
+		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
 				if(maze[i-1][j] != 1){
 					drawWall(i,j,EAST);
@@ -299,8 +336,8 @@ void drawWalls(void){
 			}
 		}
 	}
-	for(i = 0; i < 10; i++){
-		for(j = 0; j < 10; j++){
+	for(i = 0; i < maze_size; i++){
+		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
 				if(maze[i+1][j] != 1){
 					drawWall(i, j, WEST);
@@ -309,8 +346,8 @@ void drawWalls(void){
 		}
 	}
 
-	for(i = 0; i < 10; i++){
-		for(j = 0; j < 10; j++){
+	for(i = 0; i < maze_size; i++){
+		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
 				if(maze[i][j-1] != 1){
 					drawWall(i,j, SOUTH);
@@ -322,9 +359,11 @@ void drawWalls(void){
 }
 
 
-/*Idalin*/
-void idle(void){
 
+
+/*Idalin*/
+//void idle(void){
+void idle(void){
 	if(turning_left_global == true || turning_right_global == true || moving_fowards_global == true){
 
 	move();
@@ -332,6 +371,7 @@ void idle(void){
 //printf("%d %d %d\n", turning_left_global, moving_fowards_global, turning_right_global);
 
 
+	
 
 	glutPostRedisplay();
 
@@ -388,12 +428,16 @@ static void free_textures(){
 //move this out sometime people
 int gameInit(){
 
-	x_position = 1;
+	x_position = 0;
 	y_position = 1;
+	orientation = WEST;
+
 
 	init_textures();
 	setTempMaze();
 	return 0;
+
+
 }
 int gameDeInit(){
 	free_textures();
