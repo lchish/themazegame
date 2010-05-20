@@ -20,13 +20,13 @@ void initGl(int argc,char **argv){
 	glEnable(GL_TEXTURE_2D);
 	//CURRENT_STATE =-1;
 	//start off in menu state
-	set_game_state(MENU_STATE_NUMBER);
+	set_game_state(GAME_STATE_NUMBER);
 
 	glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
 
 	glutDisplayFunc (gameStateRender);
 	glutIdleFunc(gameStateUpdate);
-	glutSpecialFunc(gameStateKeyboardFunc);
+ glutSpecialFunc(gameStateKeyboardFunc);
 	glutSpecialUpFunc(gameStateKeyboardUpFunc);
 	glutReshapeFunc (gameStateReshape);
 	/*
