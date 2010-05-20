@@ -22,6 +22,8 @@ int maze_size = 07;
 
 //temp
 
+int font=(int)GLUT_BITMAP_8_BY_13;
+
 int turning_left_global;
 int turning_right_global;
 int moving_fowards_global;
@@ -32,8 +34,36 @@ int y_position;
 int orientation;
 
 
+int win_x = 5;
+int win_y = 4;
+
+int start_x = 0;
+int start_y = 1;
+
+
+
 //textures
 GLuint wall_texture;
+GLuint floor_texture;
+
+
+
+void renderBitmapCharacter(float x, float y,  void *font,char *string)
+{
+  
+  char *c;
+  glRasterPos2f(x, y);
+  for (c=string; *c != '\0'; c++) {
+    glutBitmapCharacter(font, *c);
+  }
+}
+
+double distanceBetween(double xA, double yA, double xB, double yB){
+
+return sqrt((pow(xB-xA, 2)+(pow(yB-yA, 2))));
+
+}
+
 
 //temporary crap for testing
 void setTempMaze(void){
@@ -238,8 +268,19 @@ static void camera(int x, int z, int orientation){
 /*Draw a single floor tile*/
 void drawFloorTile(int i, int j){
 
-	glBegin(GL_QUADS);
-	glColor3f(1.0f, 0.0f, 0.0f);
+glBindTexture( GL_TEXTURE_2D, floor_texture );
+	glBegin(GL_QUADS);	
+	glTexCoord3d(0.0 , 0.0, 1.0); glVertex3f(0.0f + i, 0.0f,1.0f + j);
+
+	glTexCoord3d(1.0 , 0.0, 1.0); glVertex3f(1.0f + i, 0.0f,1.0f + j);
+
+	glTexCoord3d(1.0, 0.0, 0.0); glVertex3f(1.0f + i,0.0f, 0.0f + j);
+
+	glTexCoord3d(0.0, 0.0, 0.0);glVertex3f(0.0f + i,0.0f, 0.0f + j);
+	glEnd();
+
+	/*
+glColor3f(1.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f + i, 0.0f,1.0f + j);
 	glColor3f(0.0f, 1.0f,0.0f);
 	glVertex3f(1.0f + i, 0.0f,1.0f + j);
@@ -247,7 +288,7 @@ void drawFloorTile(int i, int j){
 	glVertex3f(1.0f + i,0.0f, 0.0f + j);
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glVertex3f(0.0f + i,0.0f, 0.0f + j);
-	glEnd();
+	*/
 }
 /*Draw a single textured wall*/
 void drawWall(int i, int j, int direction){
@@ -255,7 +296,7 @@ void drawWall(int i, int j, int direction){
 	//printf("%d %d %d", i, j, direction);
 	
 
-  
+  glBindTexture( GL_TEXTURE_2D, wall_texture );
 
 	if(direction == SOUTH){
 
@@ -387,11 +428,21 @@ void display(void){
 	
 
 
+
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor (0.0,0.0,0.0,1.0);
 	glLoadIdentity();
 
 	camera(x_position, y_position, orientation);
+//renderBitmapCharacher(0,0,0,(void *)font,"3D Tech");
+
+
+glDisable(GL_TEXTURE_2D);
+	renderBitmapCharacter(100, 120, GLUT_BITMAP_HELVETICA_18, "Sup");
+glEnable(GL_TEXTURE_2D);
+
+
 
 	drawFloor(); 
 	drawWalls();
@@ -420,15 +471,17 @@ void reshape (int w, int h) {
 
 static void init_textures(){
 	wall_texture = genTexture("data/images/textures/wall.bmp");
+	floor_texture = genTexture("data/images/textures/floor.bmp");
 }
 static void free_textures(){
 	glDeleteTextures( 1, &wall_texture );
+	glDeleteTextures(1, &floor_texture);
 }
 //move this out sometime people
 int gameInit(){
 
-	x_position = 0;
-	y_position = 1;
+	x_position = start_x;
+	y_position = start_y;
 	orientation = WEST;
 
 
