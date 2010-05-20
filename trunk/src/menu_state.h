@@ -6,4 +6,5 @@ int menuDeInit();
 void menuUpdate();
 void menuRender();
 void menuKeyPressed(unsigned char key,int x,int y);
+void menuProcessNormalKeys(int key,int x,int y);
 #endif

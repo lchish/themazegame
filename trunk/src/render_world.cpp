@@ -7,6 +7,7 @@
 
 #include "render_world.h"
 #include "texture.h"
+#include "defs.h"
 
 using namespace std;
 
@@ -24,9 +25,9 @@ int maze_size = 07;
 
 int font=(int)GLUT_BITMAP_8_BY_13;
 
-int turning_left_global;
-int turning_right_global;
-int moving_fowards_global;
+bool turning_left_global;
+bool turning_right_global;
+bool moving_fowards_global;
 
 
 int x_position;
@@ -423,12 +424,7 @@ void idle(void){
 /*Display function - called from main*/
 void display(void){
 
-
 	//test
-	
-
-
-
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor (0.0,0.0,0.0,1.0);

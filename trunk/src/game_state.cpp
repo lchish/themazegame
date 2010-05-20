@@ -43,7 +43,7 @@ void gameStateReshape(int w,int h){
 }
 void gameStateKeyboardFunc(int key, int x, int y){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
-
+		menuProcessNormalKeys(key,x,y);
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
 		processNormalKeys(key,x,y);
 	}

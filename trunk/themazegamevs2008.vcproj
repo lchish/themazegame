@@ -342,6 +342,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\defs.h"
+				>
+			</File>
+			<File
 				RelativePath=".\libraries\include\efx-creative.h"
 				>
 			</File>
