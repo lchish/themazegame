@@ -21,6 +21,9 @@ void initGl(int argc,char **argv){
 	//CURRENT_STATE =-1;
 	//start off in menu state
 	set_game_state(GAME_STATE_NUMBER);
+
+	glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
+
 	glutDisplayFunc (gameStateRender);
 	glutIdleFunc(gameStateUpdate);
 	glutKeyboardFunc(gameStateKeyboardFunc);

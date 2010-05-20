@@ -21,11 +21,7 @@ int maze[10][10];
 int maze_size = 07;
 
 //temp
-/*
-int player_X;
-int player_Y;
-int player_direction;
-*/
+
 int turning_left_global;
 int turning_right_global;
 int moving_fowards_global;
@@ -318,9 +314,14 @@ void drawFloor(void){
 void drawWalls(void){
 	int i, j;
 
-	drawWall(0, 1, 3);
+
+
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
+
+	if(i == 1 && j == 3 && orientation == 1){
+		printf("HELLO\n");
+	}
 
 			if(maze[i][j] == 1){
 				if(maze[i][j+1] != 1){
@@ -361,11 +362,7 @@ void drawWalls(void){
 			}
 		}
 	}
-
 }
-
-
-
 
 /*Idalin*/
 //void idle(void){
@@ -422,8 +419,13 @@ void reshape (int w, int h) {
 	glViewport (0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluPerspective (75, (GLfloat)w / (GLfloat)h, 1.0, 100.0);
+
+	/*SETTING THIS TO HIGH CAUSES OBJECTS REALLY CLOSE TO NOT BE DRAWN*/
+	gluPerspective (80, (GLfloat)w / (GLfloat)h, 0.1, 100.0);
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Wherp wherp*/
+	
 	glMatrixMode (GL_MODELVIEW);
+	//gluPerspective(45,ratio,1,1000);
 }
 
 static void init_textures(){
