@@ -32,9 +32,6 @@ int y_position;
 int orientation;
 
 
-
-int can_move = true;
-
 //textures
 GLuint wall_texture;
 
@@ -154,18 +151,18 @@ orientation++;
 
 
 
-void keyboardup(unsigned char key, int x, int y)
+void keyboardup(int key, int x, int y)
 {
 	
 	printf("%c\n", key);
-	if (key == 'a'){
+	if (key == GLUT_KEY_LEFT){
 		turning_left_global = false;
 	}
-	else if(key == 'd'){
+	else if(key == GLUT_KEY_RIGHT){
 		turning_right_global = false;
 	}
 
-	else if(key == 'w'){
+	else if(key == GLUT_KEY_UP){
 		moving_fowards_global = false;
 	}
 
@@ -176,10 +173,10 @@ void keyboardup(unsigned char key, int x, int y)
 
 /*Using WASD at the moment since I cant be fucked changing them
 to the arrow keys*/
-void processNormalKeys(unsigned char key, int x, int y){
+void processNormalKeys(int key, int x, int y){
 
 	printf("%c\n", key);
-	
+/*	
 	if(key == 'a'){
 		turning_left_global = true;
 		
@@ -192,8 +189,19 @@ void processNormalKeys(unsigned char key, int x, int y){
 	else if(key == 'd'){
 		turning_right_global = true;
 	}
+*/
+	if(key == GLUT_KEY_LEFT){
+		turning_left_global = true;
+		
+	}
 
+	else if(key == GLUT_KEY_UP){
+		moving_fowards_global = true;
+	}
 
+	else if(key == GLUT_KEY_RIGHT){
+		turning_right_global = true;
+	}
 	
 
 }
@@ -247,8 +255,7 @@ void drawWall(int i, int j, int direction){
 	//printf("%d %d %d", i, j, direction);
 	
 
-	glBindTexture(GL_TEXTURE_2D,wall_texture);
-	glColor3f(1.0f,1.0f,1.0f);//reset the colour or everything is to dark
+  
 
 	if(direction == SOUTH){
 
@@ -319,9 +326,6 @@ void drawWalls(void){
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
 
-	if(i == 1 && j == 3 && orientation == 1){
-		printf("HELLO\n");
-	}
 
 			if(maze[i][j] == 1){
 				if(maze[i][j+1] != 1){
@@ -368,16 +372,12 @@ void drawWalls(void){
 //void idle(void){
 void idle(void){
 	if(turning_left_global == true || turning_right_global == true || moving_fowards_global == true){
-
 	move();
 	}
-//printf("%d %d %d\n", turning_left_global, moving_fowards_global, turning_right_global);
-
 	glutPostRedisplay();
-
-	printf("x: %d y: %d orient: %d\n", x_position, y_position, orientation);
-
 }
+
+
 
 /*Display function - called from main*/
 void display(void){
@@ -392,23 +392,13 @@ void display(void){
 	glLoadIdentity();
 
 	camera(x_position, y_position, orientation);
-	//gluLookAt (0.5, 0.5, 0.5,0.5, 0.5, 5, 0, 1.0, 0);
-
-
-	/*Waiting for camera function from ARUN*/
-	//camera(0, 0, NORTH);
 
 	drawFloor(); 
 	drawWalls();
 
-	/*
-	glutPostRedisplay();
-	glFlush();
-	*/
 
-
+	//glFlush();
 	glutSwapBuffers();
-
 
 }
 
