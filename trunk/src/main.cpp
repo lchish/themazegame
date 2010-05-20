@@ -13,7 +13,7 @@ void initGl(int argc,char **argv){
 	CURRENT_STATE =-1;
 	glutInit (&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE);
-	glutInitWindowSize (500, 500);
+	glutInitWindowSize (800, 600);
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow ("coding on calimocho");
 	glEnable (GL_DEPTH_TEST);
@@ -26,10 +26,15 @@ void initGl(int argc,char **argv){
 
 	glutDisplayFunc (gameStateRender);
 	glutIdleFunc(gameStateUpdate);
+	glutSpecialFunc(gameStateKeyboardFunc);
+	glutSpecialUpFunc(gameStateKeyboardUpFunc);
+	glutReshapeFunc (gameStateReshape);
+	/*
 	glutKeyboardFunc(gameStateKeyboardFunc);
 	glutKeyboardUpFunc(gameStateKeyboardUpFunc);
-	glutReshapeFunc (gameStateReshape);
+	*/
 	//Game code is going into the idle function at the moment..
+	//idle function needs to be changed to a timer function
 	glutMainLoop ();
 }
 int main (int argc,char **argv){
