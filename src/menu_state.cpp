@@ -14,6 +14,11 @@ void menuKeyPressed(unsigned char key,int x,int y){
 		set_game_state(GAME_STATE_NUMBER);
 	}
 }
+void menuProcessNormalKeys(int key,int x,int y){
+	if(key == GLUT_KEY_PAGE_DOWN){
+	set_game_state(GAME_STATE_NUMBER);
+	}
+}
 static void menu_init_textures(){
 	//start_button = genTexture("data/images/menu/start_button.raw");
 	header_texture = genTexture("data/images/menu/title.png");
