@@ -27,15 +27,19 @@ void menuUpdate(){
 
 }
 void menuRender(){
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(0.5f,0.5f,0.5f);
 	glBindTexture(GL_TEXTURE_2D,header_texture);
+	
 	glBegin(GL_QUADS);
-		/*glTexCoord2d(0.0,0.0);*/ glVertex2f(0.0f, 0.0f);
-		/*glTexCoord2d(1.0,0.0); */glVertex2f(1.0f, 0.0f);
-		/*glTexCoord2d(0.0,1.0);*/ glVertex2f(0.0f, 1.0f);
-		/*glTexCoord2d(1.0,1.0);*/ glVertex2f(1.0f, 1.0f);
+	//x y
+		glTexCoord2d(0.0,0.0); glVertex2f(-0.75,-0.75);
+		glTexCoord2d(1.0,0.0); glVertex2f(0.75, -0.75);
+		glTexCoord2d(1.0,1.0); glVertex2f(0.75, 0.75);
+		glTexCoord2d(0.0,1.0); glVertex2f(-0.75, 0.75);
 	glEnd();
 		glBindTexture(GL_TEXTURE_2D,start_button_texture);
+		glutSwapBuffers();
 }
 //sets glut to use the menus rendering things
 int menuInit(){
