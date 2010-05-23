@@ -3,6 +3,8 @@
 #include "menu_state.h"
 #include "render_world.h"
 
+#include <GL/glut.h>
+
 void set_game_state(int state_number){
 	printf("Entering state %d\n",state_number);
 	// call the init method of the state we want
@@ -31,7 +33,7 @@ void gameStateUpdate(){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuUpdate();
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
-		idle();
+		//idle();
 	}
 }
 void gameStateReshape(int w,int h){
@@ -62,3 +64,4 @@ void gameStateRender(){
 		display();
 	}
 }
+

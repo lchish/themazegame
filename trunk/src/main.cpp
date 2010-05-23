@@ -25,7 +25,7 @@ void initGl(int argc,char **argv){
 	glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
 
 	glutDisplayFunc (gameStateRender);
-	glutIdleFunc(gameStateUpdate);
+	//glutIdleFunc(gameStateUpdate);
  glutSpecialFunc(gameStateKeyboardFunc);
 	glutSpecialUpFunc(gameStateKeyboardUpFunc);
 	glutReshapeFunc (gameStateReshape);
@@ -33,6 +33,7 @@ void initGl(int argc,char **argv){
 	glutKeyboardFunc(gameStateKeyboardFunc);
 	glutKeyboardUpFunc(gameStateKeyboardUpFunc);
 	*/
+	glutTimerFunc (100, gameStateTimerFunc, 0);
 	//Game code is going into the idle function at the moment..
 	//idle function needs to be changed to a timer function
 	glutMainLoop ();

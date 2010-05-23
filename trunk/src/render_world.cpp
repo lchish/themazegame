@@ -11,6 +11,8 @@
 
 using namespace std;
 
+#define PI 3.141592
+
 #define NORTH 0
 #define EAST 1
 #define SOUTH 2
@@ -34,12 +36,26 @@ int x_position;
 int y_position;
 int orientation;
 
+bool moving = false;
 
+<<<<<<< .mine
+/* For transitions. */
+double cur_x_position;
+double cur_y_position;
+double cur_angle;
+=======
 int win_x = 5;
 int win_y = 4;
+>>>>>>> .r26
 
+<<<<<<< .mine
+
+
+int can_move = true;
+=======
 int start_x = 0;
 int start_y = 1;
+>>>>>>> .r26
 
 
 
@@ -103,6 +119,8 @@ maze[2][5] = 1;
 maze[3][5] = 1;
 maze[4][5] = 1;
 maze[2][6] = 1;
+maze[5][7] = 0;
+maze[4][6] = 0;
 
 
 }
@@ -116,7 +134,7 @@ void move(){
 
 	if(moving_fowards_global){
 		if(orientation == NORTH){
-			if(maze[x_position][y_position+1] != 1){
+			if(y_position == 9 || maze[x_position][y_position+1] != 1){
 printf("No");
 			}
 			else{
@@ -124,7 +142,7 @@ y_position++;
 			}
 		}
 		if(orientation == SOUTH){
-			if(maze[x_position][y_position-1] != 1){
+			if(y_position == 0 || maze[x_position][y_position-1] != 1){
 				printf("No");
 			}
 			else{
@@ -132,7 +150,7 @@ y_position--;
 		}
 		}
 		if(orientation == EAST){
-			if(maze[x_position+1][y_position] != 1){
+			if(x_position == 9 || maze[x_position+1][y_position] != 1){
 			printf("No");
 			}
 			else{
@@ -140,7 +158,7 @@ x_position++;
 		}
 		}
 		if(orientation == WEST){
-			if(maze[x_position-1][y_position] != 1){
+			if(x_position == 0 || maze[x_position-1][y_position] != 1){
 				printf("No");
 			}
 			else{
@@ -207,18 +225,30 @@ to the arrow keys*/
 void processNormalKeys(int key, int x, int y){
 
 	printf("%c\n", key);
+<<<<<<< .mine
+	if (!moving) {
+		moving = true;
+		if(!turning_left_global && key == 'a'){
+			turning_left_global = true;
+			move();
+		}
+=======
 /*	
 	if(key == 'a'){
 		turning_left_global = true;
 		
 	}
+>>>>>>> .r26
 
-	else if(key == 'w'){
-		moving_fowards_global = true;
-	}
+		else if(!moving_fowards_global && key == 'w'){
+			moving_fowards_global = true;
+			move();
+		}
 
-	else if(key == 'd'){
-		turning_right_global = true;
+		else if(!turning_right_global && key == 'd'){
+			turning_right_global = true;
+			move();
+		}
 	}
 */
 	if(key == GLUT_KEY_LEFT){
@@ -237,8 +267,8 @@ void processNormalKeys(int key, int x, int y){
 
 }
 
-static void camera(int x, int z, int orientation){
-
+static void camera(double x, double z, double angleRadians){
+/*
 	if(orientation == NORTH){
 		gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
 	}
@@ -257,14 +287,13 @@ static void camera(int x, int z, int orientation){
 		gluLookAt(x + 0.5, 0.5 , z + 0.5,-x-1, 0.5, z + 0.5, 0, 1, 0); 
 	}
 
-
-	/*
-	        const double EYE_HEIGHT = 0.5;
-        double angleRadians = orientation * (3.14159/2);
-        gluLookAt(x + 0.5, EYE_HEIGHT, z + 0.5, x + 0.5 + cos(angleRadians), EYE_HEIGHT -
-0.2, z + 0.5 + sin(angleRadians), 0, 1, 0);
 */
+const double EYE_HEIGHT = 0.5;
+//double angleRadians = orientation * (3.14159/2);
+gluLookAt(x + 0.5, EYE_HEIGHT, z + 0.5, x + 0.5 + cos(angleRadians), EYE_HEIGHT, z + 0.5 + sin(angleRadians), 0, 1, 0);
+
 }
+
 
 /*Draw a single floor tile*/
 void drawFloorTile(int i, int j){
@@ -370,7 +399,7 @@ void drawWalls(void){
 
 
 			if(maze[i][j] == 1){
-				if(maze[i][j+1] != 1){
+				if(j == 9 || maze[i][j+1] != 1){
 					drawWall(i,j,NORTH);
 				}
 			}
@@ -382,7 +411,7 @@ void drawWalls(void){
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
-				if(maze[i-1][j] != 1){
+				if(i == 0 || maze[i-1][j] != 1){
 					drawWall(i,j,EAST);
 					//drawWall(i, j, WEST);
 				}
@@ -392,7 +421,7 @@ void drawWalls(void){
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
-				if(maze[i+1][j] != 1){
+				if(i == 9 || maze[i+1][j] != 1){
 					drawWall(i, j, WEST);
 				}
 			}
@@ -402,7 +431,7 @@ void drawWalls(void){
 	for(i = 0; i < maze_size; i++){
 		for(j = 0; j < maze_size; j++){
 			if(maze[i][j] == 1){
-				if(maze[i][j-1] != 1){
+				if(j == 0 || maze[i][j-1] != 1){
 					drawWall(i,j, SOUTH);
 				}
 			}
@@ -411,16 +440,28 @@ void drawWalls(void){
 }
 
 /*Idalin*/
+<<<<<<< .mine
+/*
+=======
 //void idle(void){
+>>>>>>> .r26
 void idle(void){
 	if(turning_left_global == true || turning_right_global == true || moving_fowards_global == true){
-	move();
+		move();
+
+		glutPostRedisplay();
 	}
+<<<<<<< .mine
+//printf("%d %d %d\n", turning_left_global, moving_fowards_global, turning_right_global);
+
+
+=======
 	glutPostRedisplay();
 }
 
+>>>>>>> .r26
 
-
+*/
 /*Display function - called from main*/
 void display(void){
 
@@ -428,9 +469,13 @@ void display(void){
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor (0.0,0.0,0.0,1.0);
-	glLoadIdentity();
 
-	camera(x_position, y_position, orientation);
+	//glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	camera(cur_x_position, cur_y_position, cur_angle);
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+
 //renderBitmapCharacher(0,0,0,(void *)font,"3D Tech");
 
 
@@ -480,7 +525,15 @@ int gameInit(){
 	y_position = start_y;
 	orientation = WEST;
 
+<<<<<<< .mine
+	/* For transitions. */
+	cur_x_position = 1.0;
+	cur_y_position = 1.0;
+	cur_angle = PI / 2;
 
+=======
+
+>>>>>>> .r26
 	init_textures();
 	setTempMaze();
 	return 0;
@@ -490,4 +543,78 @@ int gameInit(){
 int gameDeInit(){
 	free_textures();
 	return 0;
+}
+
+
+void gameStateTimerFunc(int value) {
+
+	bool needs_render = false;
+	double angle;
+	switch (orientation) {
+		case NORTH:
+			angle = PI / 2;
+			break;
+		case EAST:
+			angle = 0.0;
+			break;
+		case SOUTH:
+			angle = 3 * PI / 2;
+			break;
+		case WEST:
+			angle = PI;
+			break;
+		default:
+			angle = 0.0;
+	}
+
+	if (abs(cur_x_position - x_position) < 0.1) {
+		cur_x_position = x_position;
+	}
+	if (abs(cur_y_position - y_position) < 0.1) {
+		cur_y_position = y_position;
+	}
+	if (cur_angle >= 2 * PI) cur_angle -= 2*PI;
+	if (cur_angle < 0) cur_angle += 2*PI;
+	if (abs(cur_angle - angle) < (PI / 2) / 10) {
+		cur_angle = angle;
+	}
+
+	if(cur_x_position < x_position){
+		cur_x_position += 0.1;
+		needs_render = true;
+	}else if(cur_x_position > x_position){
+		cur_x_position -= 0.1;
+		needs_render = true;
+	}
+
+	if(cur_y_position < y_position){
+		cur_y_position += 0.1;
+		needs_render = true;
+	}else if(cur_y_position > y_position){
+		cur_y_position -= 0.1;
+		needs_render = true;
+	}
+
+	double angle_diff = angle - cur_angle;
+	if (angle_diff > PI) {
+		angle_diff = -(PI * 2 - angle_diff);
+	}else if (angle_diff < -PI) {
+		angle_diff = 360 + angle_diff;
+	}
+
+	if(angle_diff > 0.0){
+		cur_angle += (PI / 2) / 10;
+		needs_render = true;
+	}else if(angle_diff < 0.0){
+		cur_angle -= (PI / 2) / 10;
+		needs_render = true;
+	}
+
+	if (needs_render) {
+		moving = true;
+		glutPostRedisplay();
+	}else{
+		moving = false;
+	}
+	glutTimerFunc(100, gameStateTimerFunc, value);
 }

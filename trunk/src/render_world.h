@@ -13,4 +13,5 @@ void processNormalKeys(int key, int x, int y);
 void keyboardup(int key, int x, int y);
 int gameInit();
 int gameDeInit();
+void gameStateTimerFunc(int value);
 #endif
