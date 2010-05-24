@@ -210,7 +210,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib"
+				AdditionalDependencies="$(ProjectDir)/libraries/libs/SOIL.lib $(ProjectDir)/libraries/libs/OpenAL32.lib $(ProjectDir)/libraries/libs/alut.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(ProjectDir)/libraries/libs"
 				GenerateDebugInformation="true"
@@ -326,59 +326,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\libraries\include\al.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\alc.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\al\alut.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\audio.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\defs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\libraries\include\efx-creative.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\EFX-Util.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\efx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\freeglut.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\freeglut_ext.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\freeglut_std.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\game_state.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\glew.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\glut.h"
 				>
 			</File>
 			<File
@@ -391,14 +343,6 @@
 			</File>
 			<File
 				RelativePath=".\src\texture.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\gl\wglew.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libraries\include\xram.h"
 				>
 			</File>
 		</Filter>
