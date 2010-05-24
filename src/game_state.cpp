@@ -43,14 +43,14 @@ void gameStateReshape(int w,int h){
 		reshape(w,h);
 	}
 }
-void gameStateKeyboardFunc(int key, int x, int y){
+void gameStateKeyboardFunc(unsigned char key, int x, int y){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuProcessNormalKeys(key,x,y);
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
 		processNormalKeys(key,x,y);
 	}
 }
-void gameStateKeyboardUpFunc(int key, int x, int y){
+void gameStateKeyboardUpFunc(unsigned char key, int x, int y){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuKeyPressed(key,x,y);
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){

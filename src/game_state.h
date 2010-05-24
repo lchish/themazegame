@@ -8,7 +8,7 @@ extern int CURRENT_STATE;
 void set_game_state(const int state_number);
 void gameStateUpdate();
 void gameStateReshape(int w,int h);
-void gameStateKeyboardFunc(int key, int x, int y);
-void gameStateKeyboardUpFunc(int key, int x, int y);
+void gameStateKeyboardFunc(unsigned char key, int x, int y);
+void gameStateKeyboardUpFunc(unsigned char key, int x, int y);
 void gameStateRender();
 #endif
