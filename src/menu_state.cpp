@@ -1,3 +1,5 @@
+//put some comments in here les
+
 #include <GL/glut.h>
 
 #include "game_state.h"
