@@ -21,6 +21,9 @@ int maze[10][10];
 
 int maze_size = 07;
 
+int wid;
+int hei;
+
 //temp
 
 int font=(int)GLUT_BITMAP_8_BY_13;
@@ -413,6 +416,11 @@ void drawWalls(void){
 /*Idalin*/
 //void idle(void){
 void idle(void){
+
+
+
+
+
 	if(turning_left_global == true || turning_right_global == true || moving_fowards_global == true){
 	move();
 	}
@@ -425,6 +433,16 @@ void idle(void){
 void display(void){
 
 	//test
+//glMatrixMode(GL_MODELVIEW);
+
+	//glViewport (0, 0, (GLsizei)w, (GLsizei)h);
+
+	/*SETTING THIS TO HIGH CAUSES OBJECTS REALLY CLOSE TO NOT BE DRAWN*/
+	//gluPerspective (80, (GLfloat)w / (GLfloat)h, 0.1, 100.0);
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Wherp wherp*/
+
+	//gluPerspective(45,ratio,1,1000);
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glClearColor (0.0,0.0,0.0,1.0);
@@ -438,7 +456,8 @@ glDisable(GL_TEXTURE_2D);
 	renderBitmapCharacter(100, 120, GLUT_BITMAP_HELVETICA_18, "Sup");
 glEnable(GL_TEXTURE_2D);
 
-
+//glMatrixMode(GL_PROJECTION);
+//glLoadIdentity();
 
 	drawFloor(); 
 	drawWalls();
@@ -452,6 +471,10 @@ glEnable(GL_TEXTURE_2D);
 
 /*Reshape also called from main*/
 void reshape (int w, int h) {
+wid = w;
+hei = h;
+
+
 
 	glViewport (0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode (GL_PROJECTION);
@@ -483,6 +506,12 @@ int gameInit(){
 
 	init_textures();
 	setTempMaze();
+
+
+reshape(800, 600);
+
+//reshape(wid, hei);
+
 	return 0;
 
 
