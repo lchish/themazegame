@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <GL/glut.h>
 #include "game_state.h"
 #include "menu_state.h"
 #include "render_world.h"
@@ -31,6 +32,7 @@ void gameStateUpdate(){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuUpdate();
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
+
 		idle();
 	}
 }

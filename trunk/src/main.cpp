@@ -15,7 +15,7 @@ void initGl(int argc,char **argv){
 	glutInitDisplayMode (GLUT_DOUBLE);
 	glutInitWindowSize (800, 600);
 	glutInitWindowPosition (100, 100);
-	glutCreateWindow ("coding on calimocho");
+	glutCreateWindow ("The Maze Game");
 	glEnable (GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	//CURRENT_STATE =-1;
@@ -26,8 +26,12 @@ void initGl(int argc,char **argv){
 
 	glutDisplayFunc (gameStateRender);
 	glutIdleFunc(gameStateUpdate);
- glutSpecialFunc(gameStateKeyboardFunc);
+
+
+	 glutSpecialFunc(gameStateKeyboardFunc);
 	glutSpecialUpFunc(gameStateKeyboardUpFunc);
+
+
 	glutReshapeFunc (gameStateReshape);
 	/*
 	glutKeyboardFunc(gameStateKeyboardFunc);

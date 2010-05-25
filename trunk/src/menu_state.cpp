@@ -14,8 +14,10 @@ void menuKeyPressed(unsigned char key,int x,int y){
 		set_game_state(GAME_STATE_NUMBER);
 	}
 }
+
+
 void menuProcessNormalKeys(int key,int x,int y){
-	if(key == GLUT_KEY_PAGE_DOWN){
+	if(key == GLUT_KEY_F1){
 	set_game_state(GAME_STATE_NUMBER);
 	}
 }
