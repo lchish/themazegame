@@ -7,9 +7,9 @@ CPPFILES = src/main.cpp src/audio.cpp src/game_state.cpp src/menu_state.cpp \
 	src/render_world.cpp src/texture.cpp
 OFILES = $(CPPFILES:.cpp=.o)
 
-
-default:go
+all:go
 .cpp.o: $(CPPFILES)
-	$(CC) -c $< $(CFLAGS) $(LFLAGS)
+	 $(CC) -c $< $(CFLAGS) $(LFLAGS)
 go: $(OFILES)
-	$(CC) ../$(OFILES) -o themazegame $(CFLAGS) $(LFLAGS)
+	mv *.o $(SRCDIR) 	
+	$(CC) $(OFILES) -o themazegame $(CFLAGS) $(LFLAGS)
