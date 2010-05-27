@@ -1,10 +1,10 @@
-CFLAGS = -lGL -lGLU -lglut -g -lalut -lopenal -lSOIL -I../linuxlib/include
-LFLAGS = -L../linuxlib/libraries
+CFLAGS =  -g  -Ilinuxlib/include
+LFLAGS = -Llinuxlib/libraries -lGL -lGLU -lglut -lalut -lopenal -lSOIL
 CC = g++
 SRCDIR = src
 OUTDIR = linuxbuild
-CPPFILES = main.cpp audio.cpp game_state.cpp menu_state.cpp \
-	render_world.cpp texture.cpp
+CPPFILES = src/main.cpp src/audio.cpp src/game_state.cpp src/menu_state.cpp \
+	src/render_world.cpp src/texture.cpp
 OFILES = $(CPPFILES:.cpp=.o)
 
 
@@ -12,4 +12,4 @@ default:go
 .cpp.o: $(CPPFILES)
 	$(CC) -c $< $(CFLAGS) $(LFLAGS)
 go: $(OFILES)
-	$(CC) $(OFILES) -o themazegame $(CFLAGS) $(LFLAGS)
+	$(CC) ../$(OFILES) -o themazegame $(CFLAGS) $(LFLAGS)
