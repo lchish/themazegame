@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Make sure you have opengl, openal,freeglut,freealut all installed and ready to go and a svn client.
+Make sure you have gcc devtools, cmake, opengl, openal, freeglut, freealut all installed and ready to go and a svn client.
 
 = Details =
 
@@ -15,3 +15,4 @@ then switch to the root directory (cd themazegame):
   * Copy the compiled executable from build/src to the root directory so the executable has access to data files (cp src/themazegame ..).
   * Switch back to the root directory (cd ..).
   * Enjoy (./themazegame)
+To rebuild the code remove the build folder (rm -rf build), and repeat the above.
