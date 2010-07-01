@@ -14,7 +14,7 @@ cp build/src/themazegame .
 ./themazegame")
 
 INCLUDE_DIRECTORIES(external/SOIL)
-ADD_DEFINITIONS(-Wall)#compiler options
+ADD_DEFINITIONS(-Wall -g)#compiler options
 
 find_package(OpenGL)
 find_package(GLUT)

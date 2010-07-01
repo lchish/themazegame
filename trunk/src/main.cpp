@@ -1,61 +1,131 @@
 #include <iostream>
 #include <cstdlib>
 
-#include <GL/glew.h>
-#include <GL/glut.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 
 #include "render_world.h"
 #include "game_state.h"
 #include "menu_state.h"
 #include "audio.h"
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 /*The current game state - Menu, main game state etc...*/
 int CURRENT_STATE;
+bool quit = false;
+
+/* Initialise the sdl surface */
+int initSDL(){
+  if(SDL_Init(SDL_INIT_VIDEO) !=0){
+    fprintf(stderr,"Unable to init sdl: %s\n",SDL_GetError());
+    return false;
+  }
+  atexit(SDL_Quit);
+  //To use OpenGL, you need to get some information first,
+  const SDL_VideoInfo *info = SDL_GetVideoInfo();
+  if(!info) {
+    /* This should never happen, if it does PANIC! */
+    fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
+    return false;
+  }
+  int bpp = info->vfmt->BitsPerPixel;
+  
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
+  if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
+		       SDL_OPENGL | SDL_SWSURFACE) == 0) {
+    fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
+    return false;
+  }
+  SDL_WM_SetCaption("The maze game",0);
+  return true;
+}
 
 /*Initalize all the openGL code*/
-void initGl(int argc,char **argv){
+void initGl(){
 	CURRENT_STATE =-1;
-	glutInit (&argc, argv);
-	//double buffering
-	glutInitDisplayMode (GLUT_DOUBLE);
-	glutInitWindowSize (800, 600);
-	glutInitWindowPosition (100, 100);
-	glutCreateWindow ("The Maze Game");
-
-	/*Enable depth testing, and textures. Depth testing means
-		objects far away wont get drawn in front of close ones*/
-	glEnable (GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	//CURRENT_STATE =-1;
-
 	//start off in menu state
 	set_game_state(MENU_STATE_NUMBER);
 	/*No idea what this does?*/
 	glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
-
-	/*Glut stuff that needs to be defined*/
-	//when the window gets redawn
-	glutDisplayFunc (gameStateRender);
-	//when nothing is happening
-	glutIdleFunc(gameStateUpdate);
-	//keyboard being pressed down
-	glutSpecialFunc(gameStateKeyboardFunc);
-	//keyboard being released
-	glutSpecialUpFunc(gameStateKeyboardUpFunc);
-	//window being reshaped
-	glutReshapeFunc (gameStateReshape);
-	/*
-	glutKeyboardFunc(gameStateKeyboardFunc);
-	glutKeyboardUpFunc(gameStateKeyboardUpFunc);
-	*/
-	//Game code is going into the idle function at the moment..
-	//idle function needs to be changed to a timer function
-	glutMainLoop ();
 }
+
+void handleInput(){
+  SDL_Event event;
+  while(SDL_PollEvent(&event)){
+    switch(event.type){
+    case SDL_KEYDOWN:
+      //for debugging
+      printf("The %s key was pressed!\n",SDL_GetKeyName(event.key.keysym.sym));
+
+      if(event.key.keysym.sym == SDLK_ESCAPE){
+	quit=true;
+	break;
+      }
+      gameStateKeyboardDown(event.key.keysym.sym);
+      break;
+    case SDL_KEYUP:
+      gameStateKeyboardUp(event.key.keysym.sym);
+      break;
+    case SDL_QUIT:
+      quit = true;
+      break;
+      /** mouse stuff if we ever need it
+    case SDL_MOUSEMOTION:
+      MouseMoved(
+		 event.button.button, 
+		 event.motion.x, 
+		 event.motion.y, 
+		 event.motion.xrel, 
+		 event.motion.yrel);
+      break;
+      
+    case SDL_MOUSEBUTTONUP:
+      MouseButtonUp(
+		    event.button.button, 
+		    event.motion.x, 
+		    event.motion.y, 
+		    event.motion.xrel, 
+		    event.motion.yrel);
+      break;
+      
+    case SDL_MOUSEBUTTONDOWN:
+      MouseButtonDown(
+		      event.button.button, 
+		      event.motion.x, 
+		      event.motion.y, 
+		      event.motion.xrel, 
+		      event.motion.yrel);
+      break;
+      */
+    }
+  }
+}
+
+void update(){
+  handleInput();
+  gameStateUpdate();
+}
+
+void render(){
+  gameStateRender();
+}
+
+void gameMainLoop(){
+  while(!quit){
+    update();
+    render();
+  }
+}
+
 int main (int argc,char **argv){
 	std::cout << "Starting Game" << std::endl;
 	//game code goes here
+	initSDL();
 	initAudio(&argc,argv);
-	initGl(argc,argv);
+	initGl();
+	gameMainLoop();
 	return EXIT_SUCCESS;
 }
