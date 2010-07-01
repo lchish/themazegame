@@ -1,7 +1,7 @@
 //put some comments in here les
-
-#include <GL/glut.h>
-
+// the menu
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 #include "game_state.h"
 #include "menu_state.h"
 #include "render_world.h"
@@ -9,20 +9,15 @@
 
 GLuint start_button_texture,exit_button_texture,options_button_texture,header_texture;
 
-static void init_textures(){
-}
-void menuKeyPressed(unsigned char key,int x,int y){
-	if(key =='m'){//transition to main game state
-		set_game_state(GAME_STATE_NUMBER);
-	}
-}
-
-
-void menuProcessNormalKeys(int key,int x,int y){
-	if(key == GLUT_KEY_F1){
+void menuKeyUp(SDLKey key){
+	if(key == 'm'){
 	set_game_state(GAME_STATE_NUMBER);
 	}
 }
+void menuKeyDown(SDLKey key){
+	
+}
+
 static void menu_init_textures(){
 	//start_button = genTexture("data/images/menu/start_button.raw");
 	header_texture = genTexture("data/images/menu/title.png");
@@ -48,9 +43,9 @@ void menuRender(){
 		glTexCoord2d(0.0,1.0); glVertex2f(-0.75, 0.75);
 	glEnd();
 		glBindTexture(GL_TEXTURE_2D,start_button_texture);
-		glutSwapBuffers();
+		SDL_GL_SwapBuffers();
 }
-//sets glut to use the menus rendering things
+
 int menuInit(){
 	menu_init_textures();
 	return 0;

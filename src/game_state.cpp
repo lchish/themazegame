@@ -1,5 +1,5 @@
 #include <cstdio>
-#include <GL/glut.h>
+
 #include "game_state.h"
 #include "menu_state.h"
 #include "render_world.h"
@@ -32,7 +32,6 @@ void gameStateUpdate(){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuUpdate();
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
-
 		idle();
 	}
 }
@@ -43,18 +42,18 @@ void gameStateReshape(int w,int h){
 		reshape(w,h);
 	}
 }
-void gameStateKeyboardFunc(int key, int x, int y){
+void gameStateKeyboardUp(SDLKey key){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
-		menuProcessNormalKeys(key,x,y);
+		menuKeyUp(key);
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
-		processNormalKeys(key,x,y);
+	  inGameKeyboardUp(key);
 	}
 }
-void gameStateKeyboardUpFunc(int key, int x, int y){
+void gameStateKeyboardDown(SDLKey key){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
-		menuKeyPressed(key,x,y);
+	  menuKeyDown(key);
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
-		keyboardup(key,x,y);
+	  inGameKeyboardDown(key);
 	}
 }
 void gameStateRender(){
