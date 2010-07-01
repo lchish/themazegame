@@ -33,6 +33,7 @@ int initSDL(){
   int bpp = info->vfmt->BitsPerPixel;
   
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,16);
   if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
 		       SDL_OPENGL | SDL_SWSURFACE) == 0) {
     fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
@@ -45,6 +46,7 @@ int initSDL(){
 /*Initalize all the openGL code*/
 void initGl(){
 	CURRENT_STATE =-1;
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	//start off in menu state
 	set_game_state(MENU_STATE_NUMBER);
