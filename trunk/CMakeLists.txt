@@ -17,7 +17,7 @@ INCLUDE_DIRECTORIES(external/SOIL)
 ADD_DEFINITIONS(-Wall -g)#compiler options
 
 find_package(OpenGL)
-find_package(GLUT)
+find_package(SDL)
 find_package(OpenAL)
 add_subdirectory(external)
 add_subdirectory(src)
