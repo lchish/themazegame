@@ -17,7 +17,7 @@ glEnd();
 */
 
 /*this works with png's now yay*/
-GLuint genTexture(char *filename){
+GLuint genTexture(const char *filename){
 	/* load an image file directly as a new OpenGL texture */
 	GLuint tex_2d = SOIL_load_OGL_texture
 		(
