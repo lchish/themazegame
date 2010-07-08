@@ -49,6 +49,8 @@ void initGl(){
 	CURRENT_STATE =-1;
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
+
+
 	//start off in menu state
 	set_game_state(MENU_STATE_NUMBER);
 	/*No idea what this does?*/
