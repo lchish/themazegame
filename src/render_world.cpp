@@ -9,9 +9,12 @@
 #include "defs.h"
 #include "render_world.h"
 #include "texture.h"
-
-
 #include "main_game.h"
+
+
+#include "maze.h"
+
+
 
 using namespace std;
 
@@ -19,6 +22,15 @@ using namespace std;
 /*Textures*/
 GLuint wall_texture;
 GLuint floor_texture;
+
+Maze maze_render;
+
+
+
+void set_maze(Maze target){
+  maze_render = target;
+}
+
 
 /*Temporary camera function - called before redrawing the graphics*/
  void camera(int x, int z, int orientation){
@@ -100,10 +112,10 @@ void drawFloor(void){
 
   int i, j;
 
-  for(i = 0; i < maze_size; i++){
-    for(j = 0; j < maze_size; j++){
+  for(i = 0; i < maze_render.width(); i++){
+    for(j = 0; j < maze_render.height(); j++){
 
-      if(maze[i][j] == 1){
+      if(maze_render.value_at(i, j) == 1){
 	drawFloorTile(i,j);
       }
     }
@@ -119,12 +131,12 @@ void drawWalls(void){
 
 
 
-  for(i = 0; i < maze_size; i++){
-    for(j = 0; j < maze_size; j++){
+  for(i = 0; i < maze_render.width(); i++){
+    for(j = 0; j < maze_render.height(); j++){
 
 
-      if(maze[i][j] == 1){
-	if(maze[i][j+1] != 1){
+      if(maze_render.value_at(i, j) == 1){
+	if(maze_render.value_at(i, j+1) != 1){
 	  drawWall(i,j,NORTH);
 	}
       }
@@ -133,30 +145,30 @@ void drawWalls(void){
 
 
 
-  for(i = 0; i < maze_size; i++){
-    for(j = 0; j < maze_size; j++){
-      if(maze[i][j] == 1){
-	if(maze[i-1][j] != 1){
+  for(i = 0; i < maze_render.width(); i++){
+    for(j = 0; j < maze_render.height(); j++){
+      if(maze_render.value_at(i, j) == 1){
+	if(maze_render.value_at(i-1, j) != 1){
 	  drawWall(i,j,EAST);
 	  //drawWall(i, j, WEST);
 	}
       }
     }
   }
-  for(i = 0; i < maze_size; i++){
-    for(j = 0; j < maze_size; j++){
-      if(maze[i][j] == 1){
-	if(maze[i+1][j] != 1){
+  for(i = 0; i < maze_render.width(); i++){
+    for(j = 0; j < maze_render.height(); j++){
+      if(maze_render.value_at(i, j) == 1){
+	if(maze_render.value_at(i+1, j) != 1){
 	  drawWall(i, j, WEST);
 	}
       }
     }
   }
 
-  for(i = 0; i < maze_size; i++){
-    for(j = 0; j < maze_size; j++){
-      if(maze[i][j] == 1){
-	if(maze[i][j-1] != 1){
+  for(i = 0; i < maze_render.width(); i++){
+    for(j = 0; j < maze_render.height(); j++){
+      if(maze_render.value_at(i, j) == 1){
+	if(maze_render.value_at(i, j-1) != 1){
 	  drawWall(i,j, SOUTH);
 	}
       }
@@ -189,8 +201,6 @@ void drawWalls(void){
  * often as possible - Whenever the idle loop finishes*/
 void display(void){
 
-GLfloat specular[] = {1.0f, 1.0f, 1.0f , 1.0f};
-glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
