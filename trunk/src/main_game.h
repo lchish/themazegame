@@ -15,8 +15,6 @@ extern int gameDeInit();
 
 extern void display();
 
-extern int maze[10][10];
-extern int maze_size;
 extern int turning_left_global;
 extern int turning_right_global;
 extern int moving_fowards_global;
@@ -28,5 +26,7 @@ extern int orientation;
 
 extern int start_x;
 extern int start_y;
+
+
 
 #endif

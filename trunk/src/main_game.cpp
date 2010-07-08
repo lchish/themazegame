@@ -13,10 +13,11 @@
 
 #include "defs.h"
 
+#include "maze.h"
 
-/*The maze floor is on the X-Z axis, and the walls get drawn on the Y axis*/
-int maze[10][10];
-int maze_size = 07;
+/*Our maze*/
+Maze maze;
+
 
 /* For move function */
 int turning_left_global;
@@ -34,57 +35,12 @@ int start_x = 0;
 int start_y = 1;
 
 
-
-/*Set temporary maze only for beta  TO be removed later*/
-void setTempMaze(void){
-
-
-  for(int i = 0; i < maze_size; i++){
-    for(int j = 0; j < maze_size; j++){
-      maze[i][j] = 0;
-    }
-  }
-
-  maze[1][0] = 1;
-  maze[2][0] = 1;
-
-  maze[3][0] = 1;
-  maze[5][0] = 1;
-  maze[6][0] = 1;
-  maze[0][1] = 1;
-  maze[1][1] = 1;
-  maze[3][1] = 1;
-  maze[5][1] = 1;
-  maze[1][2] = 1;
-  maze[2][2] = 1;
-  maze[3][2] = 1;
-  maze[4][2] = 1;
-  maze[5][2] = 1;
-  maze[6][2] = 1;
-  maze[1][3] = 1;
-  maze[3][3] = 1;
-  maze[6][3] = 1;
-  maze[0][4] = 1;
-  maze[1][4] = 1;
-  maze[2][4] = 1;
-  maze[5][4] = 1;
-  maze[6][4] = 1;
-  maze[2][5] = 1;
-  maze[3][5] = 1;
-  maze[4][5] = 1;
-  maze[2][6] = 1;
-
-}
-
-
-
-
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
 void move(){
   if(moving_fowards_global){
     if(orientation == NORTH){
-      if(maze[x_position][y_position+1] != 1){
+      if(maze.value_at(x_position, y_position+1) != 1){
 	printf("No");
       }
       else{
@@ -92,7 +48,7 @@ void move(){
       }
     }
     if(orientation == SOUTH){
-      if(maze[x_position][y_position-1] != 1){
+      if(maze.value_at(x_position, y_position-1) != 1){
 	printf("No");
       }
       else{
@@ -100,7 +56,7 @@ void move(){
       }
     }
     if(orientation == EAST){
-      if(maze[x_position+1][y_position] != 1){
+      if(maze.value_at(x_position+1, y_position) != 1){
 	printf("No");
       }
       else{
@@ -108,7 +64,7 @@ void move(){
       }
     }
     if(orientation == WEST){
-      if(maze[x_position-1][y_position] != 1){
+	if(maze.value_at(x_position-1, y_position) != 1){
 	printf("No");
       }
       else{
@@ -204,7 +160,7 @@ int gameInit(){
   orientation = WEST;
 
   init_textures();
-  setTempMaze();
+
 
   reshape(800, 600);
 
