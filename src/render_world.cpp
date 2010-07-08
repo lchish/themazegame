@@ -168,6 +168,12 @@ void drawWalls(void){
  void init_textures(){
   wall_texture = genTexture("data/images/textures/wall.bmp");
   floor_texture = genTexture("data/images/textures/floor.bmp");
+
+
+
+  /*TO MOVE LATER*/
+
+
 }
 
  void free_textures(){
@@ -183,12 +189,18 @@ void drawWalls(void){
  * often as possible - Whenever the idle loop finishes*/
 void display(void){
 
+GLfloat specular[] = {1.0f, 1.0f, 1.0f , 1.0f};
+glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
   camera(x_position, y_position, orientation);
 
   drawFloor(); 
   drawWalls();
+
+
+
 
   SDL_GL_SwapBuffers();
 }
