@@ -10,6 +10,12 @@ extern "C" {
 #define true 1
 #define false 0;
 
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
+
+
 #ifdef __cplusplus
 }
 #endif 

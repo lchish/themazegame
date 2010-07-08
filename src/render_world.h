@@ -1,16 +1,19 @@
 #ifndef RENDER_WORLD_H
 #define RENDER_WORLD_H
 
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
-extern void display();
-extern void setTempMaze(void);
 extern void reshape(int, int);
-extern void idle();
-extern void myTimer(int);
 
-void inGameKeyboardUp(SDLKey key);
-void inGameKeyboardDown(SDLKey key);
-int gameInit();
-int gameDeInit();
+
+extern void init_textures();
+extern void free_textures();
+
+extern void drawWalls();
+extern void drawFloor();
+
+extern void setMaze(int**);
+extern void setMazeSize(int);
+
+extern  void camera(int, int, int);
 #endif

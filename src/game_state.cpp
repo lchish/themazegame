@@ -1,8 +1,11 @@
 #include <cstdio>
 
 #include "game_state.h"
+
 #include "menu_state.h"
-#include "render_world.h"
+#include "main_game.h"
+
+
 
 void set_game_state(int state_number){
 	printf("Entering state %d\n",state_number);
@@ -39,7 +42,7 @@ void gameStateReshape(int w,int h){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		//todo add a reshape for the menu?
 	}else if(CURRENT_STATE==GAME_STATE_NUMBER){
-		reshape(w,h);
+	  	reshape(w,h);
 	}
 }
 void gameStateKeyboardUp(SDLKey key){
