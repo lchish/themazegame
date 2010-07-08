@@ -4,10 +4,11 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 
-#include "render_world.h"
+#include "main_game.h"
 #include "game_state.h"
 #include "menu_state.h"
-#include "audio.h"
+
+
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -126,7 +127,9 @@ int main (int argc,char **argv){
 	std::cout << "Starting Game" << std::endl;
 	//game code goes here
 	initSDL();
-	initAudio(&argc,argv);
+
+
+
 	initGl();
 	gameMainLoop();
 	return EXIT_SUCCESS;
