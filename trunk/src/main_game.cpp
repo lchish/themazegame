@@ -15,7 +15,9 @@
 
 #include "maze.h"
 
-/*Our maze*/
+using namespace std;
+
+/*Our maze*/ //creates new instance
 Maze maze;
 
 
@@ -33,6 +35,9 @@ int orientation;
 /*Where we start*/
 int start_x = 0;
 int start_y = 1;
+
+int end_x;
+int end_y;
 
 
 /*Modifies the players position/orientation based
@@ -146,6 +151,12 @@ void idle(void){
      || moving_fowards_global == true){
     move();
   }
+  
+  if(x_position == end_x && y_position == end_y){
+
+    printf("You win!\n");
+    exit(0);
+  }
   //glutPostRedisplay(); don't think there is a SDL equivalent of this
   // so taking it out.
 }
@@ -158,6 +169,10 @@ int gameInit(){
   x_position = start_x;
   y_position = start_y;
   orientation = WEST;
+  
+  end_x = 9;
+  end_y = 7;
+
 
   init_textures();
 
