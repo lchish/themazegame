@@ -32,8 +32,10 @@ void set_maze(Maze target){
 }
 
 
+
+
 /*Temporary camera function - called before redrawing the graphics*/
- void camera(int x, int z, int orientation){
+void camera(int x, int z, int orientation){
   if(orientation == NORTH){
     gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
   }
@@ -65,6 +67,59 @@ void drawFloorTile(int i, int j){
 
 }
 
+
+void drawCube(int i, int j){
+
+  
+  glBegin(GL_QUADS); 
+  glColor3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.0f + i + 0.25, 0.5f, 0.0f + j + 0.25);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.5f + i + 0.25, 0.5f, 0.0f+ j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.5f + i + 0.25, 0.0f, 0.0f+j + 0.25);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f + i + 0.25, 0.0f, 0.0f + j + 0.25);
+  glEnd();
+  
+  
+
+  glBegin(GL_QUADS);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f+j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f);  
+glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f+j + 0.25);
+  glColor3f(0.0f, 1.0f, 0.0f);  
+glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f+j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f); 
+ glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f+j + 0.25);
+  glEnd();
+  
+  
+  glBegin(GL_QUADS);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f + i + 0.25, 0.5f , 0.0f + j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f);  
+glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f + j + 0.25);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f + j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f); 
+ glVertex3f(0.0f+ i + 0.25,  0.0f , 0.0f + j + 0.25);
+  glEnd();
+  
+  glBegin(GL_QUADS);
+  glColor3f(0.0f, 1.0f, 0.0f);
+  glVertex3f(0.5f + i + 0.25, 0.5f, 0.0f + j + 0.25);
+   glColor3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f + j + 0.25);
+  glColor3f(0.0f, 1.0f, 0.0f); 
+ glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f + j + 0.25);
+  glColor3f(0.0f, 0.0f, 0.0f);
+  glVertex3f(0.5f + i + 0.25, 0.0f , 0.0f + j + 0.25);
+  glEnd();
+  
+  glColor3f(1.0, 1.0, 1.0);
+}
 
 
 /*Draw a single textured wall*/
@@ -102,6 +157,7 @@ void drawWall(int i, int j, int direction){
     glTexCoord2d(1.0,0.0);glVertex3f(1.0f + i, 0.0f , 1.0f + j);
     glTexCoord2d(0.0,0.0);glVertex3f(1.0f + i, 0.0f , 0.0f + j);
     glEnd();
+
   }
 }
 
@@ -114,6 +170,9 @@ void drawFloor(void){
 
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
+
+
+      /*ERROR ERROR ERROR DONT LET THIS STAY IN HERE */
 
       if(maze_render.value_at(i, j) == 1){
 	drawFloorTile(i,j);
@@ -129,8 +188,6 @@ void drawFloor(void){
 void drawWalls(void){
   int i, j;
 
-
-
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
 
@@ -143,14 +200,11 @@ void drawWalls(void){
     }
   }
 
-
-
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
       if(maze_render.value_at(i, j) == 1){
 	if(maze_render.value_at(i-1, j) != 1){
 	  drawWall(i,j,EAST);
-	  //drawWall(i, j, WEST);
 	}
       }
     }
@@ -176,8 +230,9 @@ void drawWalls(void){
   }
 }
 
+
 /*Leslies code*/
- void init_textures(){
+void init_textures(){
   wall_texture = genTexture("data/images/textures/wall.bmp");
   floor_texture = genTexture("data/images/textures/floor.bmp");
 
@@ -188,7 +243,7 @@ void drawWalls(void){
 
 }
 
- void free_textures(){
+void free_textures(){
   glDeleteTextures( 1, &wall_texture );
   glDeleteTextures(1, &floor_texture);
 }
@@ -202,16 +257,19 @@ void drawWalls(void){
 void display(void){
 
 
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
   camera(x_position, y_position, orientation);
 
   drawFloor(); 
   drawWalls();
+  drawCube(end_x,end_y);
+  
 
 
 
-
+//glDisable(GL_LIGHTING);
   SDL_GL_SwapBuffers();
 }
 
