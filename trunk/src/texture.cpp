@@ -4,11 +4,6 @@
 #include "globals.h"
 #include "texture.h"
 
-//#define GL_TEXTURE_MAX_ANISOTROPY_EXT 0x84FE
-//#define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT 0x8FF
-
-//bool anisotropic_filtering;
-//float max_anistropy;
 /* Generates a generic texture with some parameters already set
 Example usage:
 
