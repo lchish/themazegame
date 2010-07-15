@@ -142,7 +142,7 @@ void drawWall(int i, int j, int direction){
     glTexCoord2d(0.0,0.0); glVertex3f(0.0f + i, 0.0f , 1.0f+j);
     glEnd();
   }
-  else if(direction == EAST){
+  else if(direction == WEST){
     glBegin(GL_QUADS);
     glTexCoord2d(0.0,1.0);glVertex3f(0.0f + i, 1.0f , 0.0f + j);
     glTexCoord2d(1.0,1.0);glVertex3f(0.0f + i, 1.0f , 1.0f + j);
@@ -150,7 +150,7 @@ void drawWall(int i, int j, int direction){
     glTexCoord2d(0.0,0.0);glVertex3f(0.0f+ i, 0.0f , 0.0f + j);
     glEnd();
   }
-  else if(direction == WEST){
+  else if(direction == EAST){
     glBegin(GL_QUADS);
     glTexCoord2d(0.0,1.0);glVertex3f(1.0f + i, 1.0f, 0.0f + j);
     glTexCoord2d(1.0,1.0);glVertex3f(1.0f + i, 1.0f , 1.0f + j);
@@ -173,10 +173,9 @@ void drawFloor(void){
 
 
       /*ERROR ERROR ERROR DONT LET THIS STAY IN HERE */
-
-      if(maze_render.value_at(i, j) == 1){
+     
 	drawFloorTile(i,j);
-      }
+      
     }
   }
 
@@ -190,41 +189,19 @@ void drawWalls(void){
 
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
+      
 
-
-      if(maze_render.value_at(i, j) == 1){
-	if(maze_render.value_at(i, j+1) != 1){
-	  drawWall(i,j,NORTH);
-	}
+      if(maze_render.value_at(i, j, NORTH) == 1){
+	drawWall(i, j, NORTH);
       }
-    }
-  }
-
-  for(i = 0; i < maze_render.width(); i++){
-    for(j = 0; j < maze_render.height(); j++){
-      if(maze_render.value_at(i, j) == 1){
-	if(maze_render.value_at(i-1, j) != 1){
-	  drawWall(i,j,EAST);
-	}
+      if(maze_render.value_at(i, j, SOUTH) == 1){
+	drawWall(i, j, SOUTH);
       }
-    }
-  }
-  for(i = 0; i < maze_render.width(); i++){
-    for(j = 0; j < maze_render.height(); j++){
-      if(maze_render.value_at(i, j) == 1){
-	if(maze_render.value_at(i+1, j) != 1){
-	  drawWall(i, j, WEST);
-	}
+      if(maze_render.value_at(i, j, EAST) == 1){
+	drawWall(i, j, EAST);
       }
-    }
-  }
-
-  for(i = 0; i < maze_render.width(); i++){
-    for(j = 0; j < maze_render.height(); j++){
-      if(maze_render.value_at(i, j) == 1){
-	if(maze_render.value_at(i, j-1) != 1){
-	  drawWall(i,j, SOUTH);
-	}
+      if(maze_render.value_at(i, j, WEST) == 1){
+	drawWall(i, j, WEST);
       }
     }
   }
@@ -235,11 +212,6 @@ void drawWalls(void){
 void init_textures(){
   wall_texture = genTexture("data/images/textures/wall.bmp");
   floor_texture = genTexture("data/images/textures/floor.bmp");
-
-
-
-  /*TO MOVE LATER*/
-
 
 }
 
@@ -264,7 +236,7 @@ void display(void){
 
   drawFloor(); 
   drawWalls();
-  drawCube(end_x,end_y);
+  //drawCube(end_x,end_y);
   
 
 

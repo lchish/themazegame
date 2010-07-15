@@ -34,7 +34,7 @@ int orientation;
 
 /*Where we start*/
 int start_x = 0;
-int start_y = 1;
+int start_y = 0;
 
 int end_x;
 int end_y;
@@ -45,7 +45,7 @@ int end_y;
 void move(){
   if(moving_fowards_global){
     if(orientation == NORTH){
-      if(maze.value_at(x_position, y_position+1) != 1){
+      if(maze.value_at(x_position, y_position, NORTH) != 0){
 	printf("No");
       }
       else{
@@ -53,7 +53,7 @@ void move(){
       }
     }
     if(orientation == SOUTH){
-      if(maze.value_at(x_position, y_position-1) != 1){
+      if(maze.value_at(x_position, y_position, SOUTH) != 0){
 	printf("No");
       }
       else{
@@ -61,7 +61,7 @@ void move(){
       }
     }
     if(orientation == EAST){
-      if(maze.value_at(x_position+1, y_position) != 1){
+      if(maze.value_at(x_position, y_position, EAST) != 0){
 	printf("No");
       }
       else{
@@ -69,7 +69,7 @@ void move(){
       }
     }
     if(orientation == WEST){
-	if(maze.value_at(x_position-1, y_position) != 1){
+      if(maze.value_at(x_position, y_position, WEST) != 0){
 	printf("No");
       }
       else{
@@ -97,7 +97,21 @@ void move(){
     
   }
   
-  
+  if(orientation == SOUTH){
+  printf("%d %d SOUTH\n", x_position, y_position);
+  }
+if(orientation == NORTH){
+  printf("%d %d NORTH\n", x_position, y_position);
+  }
+if(orientation == EAST){
+  printf("%d %d EAST\n", x_position, y_position);
+  }
+if(orientation == WEST){
+  printf("%d %d WEST\n", x_position, y_position);
+  }
+
+
+
   /*If these aren't reset the player races off at the speed of light*/
   moving_fowards_global = 0;
   turning_left_global = 0;
@@ -170,8 +184,8 @@ int gameInit(){
   y_position = start_y;
   orientation = WEST;
   
-  end_x = 9;
-  end_y = 7;
+  end_x = 3;
+  end_y = 4;
 
 
   init_textures();
