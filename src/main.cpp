@@ -12,11 +12,14 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
+#define DEBUG true
+
 /*The current game state - Menu, main game state etc...*/
 int CURRENT_STATE;
-bool quit = false;
+/* Should the game be running?*/
+bool exit_game_loop = false;
 
-/* Initialise the sdl surface */
+/* Initialise the sdl surface and set all SDL parameters */
 int initSDL(){
   if(SDL_Init(SDL_INIT_VIDEO) !=0){
     fprintf(stderr,"Unable to init sdl: %s\n",SDL_GetError());
@@ -33,33 +36,41 @@ int initSDL(){
   int bpp = info->vfmt->BitsPerPixel;
   
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
-  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,16);
-  if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
+    if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
 		       SDL_OPENGL | SDL_SWSURFACE) == 0) {
     fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
     return false;
   }
   SDL_WM_SetCaption("The maze game",0);
+
+  //anti aliasing consider letting people change this
+  if(!strstr((char*)glGetString(GL_EXTENSIONS),
+  	    "GL_ARB_multisample")){
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,true);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,4);
+  }
   return true;
 }
 
 /*Initalize all the openGL code*/
 void initGl(){
-	CURRENT_STATE =-1;
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	//check for anistropic filtering options
-	if(!strstr((char*)glGetString(GL_EXTENSIONS),
-		   "GL_EXT_texture_filter_anisotropic")){
-	  anisotropic_filtering = false;
-	}else{
-	  glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_anistropy);
-	  anisotropic_filtering = true;
-	}
-	//start off in menu state
-	set_game_state(MENU_STATE_NUMBER);
-	/*No idea what this does?*/
-	glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
+  CURRENT_STATE =-1;
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_TEXTURE_2D);
+  //check for anistropic filtering extensions
+  if(!strstr((char*)glGetString(GL_EXTENSIONS),
+	     "GL_EXT_texture_filter_anisotropic")){
+    anisotropic_filtering = false;
+  }else{
+    glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_anistropy);
+    anisotropic_filtering = true;
+  }
+  std::cout << "max anistropy " << max_anistropy <<std::endl;
+  //start off in menu state
+  set_game_state(MENU_STATE_NUMBER);
+  /*No idea what this does?*/
+  glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
 }
 
 void handleInput(){
@@ -68,10 +79,12 @@ void handleInput(){
     switch(event.type){
     case SDL_KEYDOWN:
       //for debugging
-      printf("The %s key was pressed!\n",SDL_GetKeyName(event.key.keysym.sym));
+      if(DEBUG)
+	printf("The %s key was pressed!\n",
+	       SDL_GetKeyName(event.key.keysym.sym));
 
       if(event.key.keysym.sym == SDLK_ESCAPE){
-	quit=true;
+	exit_game_loop=true;
 	break;
       }
       gameStateKeyboardDown(event.key.keysym.sym);
@@ -80,35 +93,35 @@ void handleInput(){
       gameStateKeyboardUp(event.key.keysym.sym);
       break;
     case SDL_QUIT:
-      quit = true;
+      exit_game_loop = true;
       break;
       /** mouse stuff if we ever need it
-    case SDL_MOUSEMOTION:
-      MouseMoved(
-		 event.button.button, 
-		 event.motion.x, 
-		 event.motion.y, 
-		 event.motion.xrel, 
-		 event.motion.yrel);
-      break;
+	  case SDL_MOUSEMOTION:
+	  MouseMoved(
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
+	  event.motion.yrel);
+	  break;
       
-    case SDL_MOUSEBUTTONUP:
-      MouseButtonUp(
-		    event.button.button, 
-		    event.motion.x, 
-		    event.motion.y, 
-		    event.motion.xrel, 
-		    event.motion.yrel);
-      break;
+	  case SDL_MOUSEBUTTONUP:
+	  MouseButtonUp(
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
+	  event.motion.yrel);
+	  break;
       
-    case SDL_MOUSEBUTTONDOWN:
-      MouseButtonDown(
-		      event.button.button, 
-		      event.motion.x, 
-		      event.motion.y, 
-		      event.motion.xrel, 
-		      event.motion.yrel);
-      break;
+	  case SDL_MOUSEBUTTONDOWN:
+	  MouseButtonDown(
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
+	  event.motion.yrel);
+	  break;
       */
     }
   }
@@ -124,20 +137,17 @@ void render(){
 }
 
 void gameMainLoop(){
-  while(!quit){
+  while(!exit_game_loop){
     update();
     render();
   }
 }
 
 int main (int argc,char **argv){
-	std::cout << "Starting Game" << std::endl;
-	//game code goes here
-	initSDL();
-
-
-
-	initGl();
-	gameMainLoop();
-	return EXIT_SUCCESS;
+  std::cout << "Starting Game" << std::endl;
+  //game code goes here
+  initSDL();
+  initGl();
+  gameMainLoop();
+  return EXIT_SUCCESS;
 }
