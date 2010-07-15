@@ -4,6 +4,9 @@
 #include "globals.h"
 #include "texture.h"
 
+bool anisotropic_filtering;
+float max_anistropy;
+
 /* Generates a generic texture with some parameters already set
 Example usage:
 

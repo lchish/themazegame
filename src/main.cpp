@@ -15,8 +15,7 @@
 /*The current game state - Menu, main game state etc...*/
 int CURRENT_STATE;
 bool quit = false;
-bool anisotropic_filtering;
-float max_anistropy;
+
 /* Initialise the sdl surface */
 int initSDL(){
   if(SDL_Init(SDL_INIT_VIDEO) !=0){
