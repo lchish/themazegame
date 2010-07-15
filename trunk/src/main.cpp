@@ -7,8 +7,7 @@
 #include "main_game.h"
 #include "game_state.h"
 #include "menu_state.h"
-
-
+#include "globals.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -16,7 +15,8 @@
 /*The current game state - Menu, main game state etc...*/
 int CURRENT_STATE;
 bool quit = false;
-
+bool anisotropic_filtering;
+float max_anistropy;
 /* Initialise the sdl surface */
 int initSDL(){
   if(SDL_Init(SDL_INIT_VIDEO) !=0){
@@ -49,8 +49,14 @@ void initGl(){
 	CURRENT_STATE =-1;
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-
-
+	//check for anistropic filtering options
+	if(!strstr((char*)glGetString(GL_EXTENSIONS),
+		   "GL_EXT_texture_filter_anisotropic")){
+	  anisotropic_filtering = false;
+	}else{
+	  glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_anistropy);
+	  anisotropic_filtering = true;
+	}
 	//start off in menu state
 	set_game_state(MENU_STATE_NUMBER);
 	/*No idea what this does?*/

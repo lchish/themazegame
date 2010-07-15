@@ -1,7 +1,14 @@
 #include <cstdio>
 #include <SOIL.h>
 #include <GL/glut.h>
+#include "globals.h"
 #include "texture.h"
+
+//#define GL_TEXTURE_MAX_ANISOTROPY_EXT 0x84FE
+//#define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT 0x8FF
+
+//bool anisotropic_filtering;
+//float max_anistropy;
 /* Generates a generic texture with some parameters already set
 Example usage:
 
@@ -24,13 +31,19 @@ GLuint genTexture(const char *filename){
 		filename,
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | 
+		SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 		);
 
 	/* check for an error during the load process */
 	if( 0 == tex_2d )
 	{
 		printf( "SOIL loading error: '%s'\n", SOIL_last_result() );
+	}
+	if(anisotropic_filtering){
+	  glBindTexture(GL_TEXTURE_2D,tex_2d);
+	  glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAX_ANISOTROPY_EXT,
+			  max_anistropy);
 	}
 	return tex_2d;
 }
