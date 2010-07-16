@@ -12,5 +12,5 @@ void unloadAudioFile(Mix_Music*);
 void stopAll();
 void close();
 void setAudioPlaying(bool);
-static void musicFinished();
+
 #endif
