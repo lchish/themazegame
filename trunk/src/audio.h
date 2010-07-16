@@ -1,6 +1,16 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-extern void initAudio(int *argc,char **argv);
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 
+int initAudio();
+Mix_Music* loadAudioFile(const char*);
+int playAudio(Mix_Music*,int);
+bool isAudioPlaying();
+void unloadAudioFile(Mix_Music*);
+void stopAll();
+void close();
+void setAudioPlaying(bool);
+static void musicFinished();
 #endif
