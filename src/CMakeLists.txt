@@ -5,6 +5,6 @@ main_game.cpp texture.cpp render_world.cpp maze.cpp)
 
 add_executable(themazegame ${themazegame_SOURCES})
 
-TARGET_LINK_LIBRARIES(themazegame SDL SOIL GL GLU)
+TARGET_LINK_LIBRARIES(themazegame SDL SDL_mixer SOIL GL GLU)
 
 
