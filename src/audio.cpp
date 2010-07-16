@@ -5,7 +5,7 @@
 #include "audio.h"
 
 static bool audio_playing;
-
+static void musicFinished();
 //make sure you init the audio AFTER the video or else this will not work
 int initAudio(){
   if(SDL_Init(SDL_INIT_AUDIO)!=0){

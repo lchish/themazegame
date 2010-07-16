@@ -8,6 +8,7 @@
 #include "game_state.h"
 #include "menu_state.h"
 #include "globals.h"
+#include "audio.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -23,7 +24,7 @@ bool exit_game_loop = false;
 int initSDL(){
   if(SDL_Init(SDL_INIT_VIDEO) !=0){
     fprintf(stderr,"Unable to init sdl: %s\n",SDL_GetError());
-    return false;
+    return 1;
   }
   atexit(SDL_Quit);
   //To use OpenGL, you need to get some information first,
@@ -31,7 +32,7 @@ int initSDL(){
   if(!info) {
     /* This should never happen, if it does PANIC! */
     fprintf(stderr, "Video query failed: %s\n", SDL_GetError());
-    return false;
+    return 1;
   }
   int bpp = info->vfmt->BitsPerPixel;
   
@@ -40,7 +41,7 @@ int initSDL(){
     if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
 		       SDL_OPENGL | SDL_SWSURFACE) == 0) {
     fprintf(stderr, "Unable to set video mode: %s\n", SDL_GetError());
-    return false;
+    return 1;
   }
   SDL_WM_SetCaption("The maze game",0);
 
@@ -50,11 +51,16 @@ int initSDL(){
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,true);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,4);
   }
-  return true;
+  //initialise SDL_mixer here to 
+  if(initAudio() !=0){
+    fprintf(stderr,"Something went wrong with audio initialising");
+    return 1;
+  }
+  return 0;
 }
 
-/*Initalize all the openGL code*/
-void initGl(){
+/*Initalize all the openGL state*/
+int initGl(){
   CURRENT_STATE =-1;
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
@@ -71,6 +77,7 @@ void initGl(){
   set_game_state(MENU_STATE_NUMBER);
   /*No idea what this does?*/
   glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
+  return 0;
 }
 
 void handleInput(){
@@ -78,7 +85,6 @@ void handleInput(){
   while(SDL_PollEvent(&event)){
     switch(event.type){
     case SDL_KEYDOWN:
-      //for debugging
       if(DEBUG)
 	printf("The %s key was pressed!\n",
 	       SDL_GetKeyName(event.key.keysym.sym));
@@ -146,8 +152,10 @@ void gameMainLoop(){
 int main (int argc,char **argv){
   std::cout << "Starting Game" << std::endl;
   //game code goes here
-  initSDL();
-  initGl();
+  if(initSDL()!=0)
+    exit(-1);
+  if(initGl()!=0)
+    exit(-1);
   gameMainLoop();
   return EXIT_SUCCESS;
 }
