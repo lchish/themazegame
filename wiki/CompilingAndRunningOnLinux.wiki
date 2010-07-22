@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Make sure you have gcc devtools, cmake, opengl, openal, freeglut, freealut all installed and ready to go and a svn client.
+Make sure you have gcc devtools, cmake, opengl, openal, SDL and SDL_mixer all installed and ready to go and a svn client.
 
 = Details =
 
