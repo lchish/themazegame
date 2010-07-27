@@ -188,15 +188,16 @@ static void freeTextures(){
 }
 
 static void initMusic(){
-  world_music = loadAudioFile("data/audio/music/test.ogg");
+  world_music = loadAudioFile("data/audio/music/gamemusic.ogg");
   //might as well start it playing
-  //if(music_on)
+  //if(music_on) give them the option to turn music on
   playAudio(world_music,-1);//-1 loops forever
 }
 
-static void freeMusic(){                                                                                                                                                            
-  unloadAudioFile(world_music);                                                                                                                                                      
+static void freeMusic(){
+  unloadAudioFile(world_music);
 }
+
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
 int gameInit(){
