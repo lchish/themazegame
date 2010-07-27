@@ -9,8 +9,8 @@ Mix_Music* loadAudioFile(const char*);
 int playAudio(Mix_Music*,int);
 bool isAudioPlaying();
 void unloadAudioFile(Mix_Music*);
-void stopAll();
-void close();
+void stopAllAudio();
+void closeAudio();
 void setAudioPlaying(bool);
 
 #endif

@@ -59,12 +59,12 @@ static void musicFinished(){
   audio_playing =false;
 }
 //stops all music playing
-void stopAll(){
+void stopAllAudio(){
   Mix_HaltMusic();
   audio_playing = false;
 }
 //closes the SDL_mixer session
-void close(){
+void closeAudio(){
   Mix_CloseAudio();
 }
 void setAudioPLaying(bool a){
