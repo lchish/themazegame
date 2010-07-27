@@ -70,3 +70,11 @@ void closeAudio(){
 void setAudioPLaying(bool a){
   audio_playing = a;
 }
+void pauseAudio(){
+  Mix_PauseMusic();
+  audio_playing = false;
+}
+void resumeAudio(){
+  Mix_ResumeMusic();
+  audio_playing = true;
+}

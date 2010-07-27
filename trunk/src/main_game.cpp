@@ -38,6 +38,7 @@ int end_y = 3;
 
 /*Music*/
 Mix_Music *world_music;
+bool music_on = true;
 
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
@@ -138,7 +139,9 @@ void inGameKeyboardUp(SDLKey key)
   else if(key == SDLK_UP){
     moving_fowards_global = false;
   }
-
+  else if(key == SDLK_m){
+    music_on = !music_on;
+  }
 }
 
 /*Called when a key is held down*/
@@ -173,6 +176,12 @@ void idle(void){
   }
   //glutPostRedisplay(); don't think there is a SDL equivalent of this
   // so taking it out.
+  //check if music should be playing
+  if(!music_on && isAudioPlaying()){
+    pauseAudio();
+  }else if(music_on && !isAudioPlaying()){
+    resumeAudio();
+  }
 }
 
 
@@ -190,8 +199,8 @@ static void freeTextures(){
 static void initMusic(){
   world_music = loadAudioFile("data/audio/music/gamemusic.ogg");
   //might as well start it playing
-  //if(music_on) give them the option to turn music on
-  playAudio(world_music,-1);//-1 loops forever
+  if(music_on) 
+    playAudio(world_music,-1);//-1 loops forever
 }
 
 static void freeMusic(){
