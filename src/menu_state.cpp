@@ -13,7 +13,7 @@ GLuint start_button_texture,exit_button_texture,options_button_texture,
 Mix_Music *menu_music;
 
 void menuKeyUp(SDLKey key){
-  if(key == 'm'){
+  if(key == SDLK_SPACE){
     set_game_state(GAME_STATE_NUMBER);
   }
 }

@@ -12,5 +12,6 @@ void unloadAudioFile(Mix_Music*);
 void stopAllAudio();
 void closeAudio();
 void setAudioPlaying(bool);
-
+void pauseAudio();
+void resumeAudio();
 #endif
