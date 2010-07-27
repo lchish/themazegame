@@ -2,37 +2,22 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
-
+#include <SDL/SDL_mixer.h>
 #include "defs.h"
 #include "render_world.h"
 #include "texture.h"
 #include "main_game.h"
-
-
 #include "maze.h"
-
-
 
 using namespace std;
 
-
-/*Textures*/
-GLuint wall_texture;
-GLuint floor_texture;
-
 Maze maze_render;
-
-
 
 void set_maze(Maze target){
   maze_render = target;
 }
-
-
-
 
 /*Temporary camera function - called before redrawing the graphics*/
 void camera(int x, int z, int orientation){
@@ -69,8 +54,6 @@ void drawFloorTile(int i, int j){
 
 
 void drawCube(int i, int j){
-
-  
   glBegin(GL_QUADS); 
   glColor3f(0.0f, 0.0f, 0.0f);
   glVertex3f(0.0f + i + 0.25, 0.5f, 0.0f + j + 0.25);
@@ -81,18 +64,16 @@ void drawCube(int i, int j){
   glColor3f(0.0f, 1.0f, 0.0f);
   glVertex3f(0.0f + i + 0.25, 0.0f, 0.0f + j + 0.25);
   glEnd();
-  
-  
 
   glBegin(GL_QUADS);
   glColor3f(0.0f, 1.0f, 0.0f);
   glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f+j + 0.25);
   glColor3f(0.0f, 0.0f, 0.0f);  
-glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f+j + 0.25);
+  glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f+j + 0.25);
   glColor3f(0.0f, 1.0f, 0.0f);  
-glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f+j + 0.25);
+  glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f+j + 0.25);
   glColor3f(0.0f, 0.0f, 0.0f); 
- glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f+j + 0.25);
+  glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f+j + 0.25);
   glEnd();
   
   
@@ -100,20 +81,20 @@ glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f+j + 0.25);
   glColor3f(0.0f, 1.0f, 0.0f);
   glVertex3f(0.0f + i + 0.25, 0.5f , 0.0f + j + 0.25);
   glColor3f(0.0f, 0.0f, 0.0f);  
-glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f + j + 0.25);
+  glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f + j + 0.25);
   glColor3f(0.0f, 1.0f, 0.0f);
   glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f + j + 0.25);
   glColor3f(0.0f, 0.0f, 0.0f); 
- glVertex3f(0.0f+ i + 0.25,  0.0f , 0.0f + j + 0.25);
+  glVertex3f(0.0f+ i + 0.25,  0.0f , 0.0f + j + 0.25);
   glEnd();
   
   glBegin(GL_QUADS);
   glColor3f(0.0f, 1.0f, 0.0f);
   glVertex3f(0.5f + i + 0.25, 0.5f, 0.0f + j + 0.25);
-   glColor3f(0.0f, 0.0f, 0.0f);
+  glColor3f(0.0f, 0.0f, 0.0f);
   glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f + j + 0.25);
   glColor3f(0.0f, 1.0f, 0.0f); 
- glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f + j + 0.25);
+  glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f + j + 0.25);
   glColor3f(0.0f, 0.0f, 0.0f);
   glVertex3f(0.5f + i + 0.25, 0.0f , 0.0f + j + 0.25);
   glEnd();
@@ -161,8 +142,6 @@ void drawWall(int i, int j, int direction){
   }
 }
 
-
-
 /*Draw all the floor*/
 void drawFloor(void){
 
@@ -207,29 +186,9 @@ void drawWalls(void){
   }
 }
 
-
-/*Leslies code*/
-void init_textures(){
-  wall_texture = genTexture("data/images/textures/wall.bmp");
-  floor_texture = genTexture("data/images/textures/floor.bmp");
-
-}
-
-void free_textures(){
-  glDeleteTextures( 1, &wall_texture );
-  glDeleteTextures(1, &floor_texture);
-}
-
-
-
-
-
 /*Display function - called from main - This function is called as
  * often as possible - Whenever the idle loop finishes*/
 void display(void){
-
-
-
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
   camera(x_position, y_position, orientation);
@@ -237,19 +196,12 @@ void display(void){
   drawFloor(); 
   drawWalls();
   //drawCube(end_x,end_y);
-  
-
-
-
-//glDisable(GL_LIGHTING);
+  //glDisable(GL_LIGHTING);
   SDL_GL_SwapBuffers();
 }
 
-
-
-
 /*Reshape also called from main - This gets called once at the start of the game
-  and then whenever the window gets resized*/
+  and then whenever the window gets resized UNUSED AT THE MOMENT UNTIL I GET THIS WORKING IN SDL*/
 void reshape (int w, int h) {
   glViewport (0, 0, (GLsizei)w, (GLsizei)h);
   glMatrixMode (GL_PROJECTION);

@@ -1,6 +1,9 @@
 #ifndef MAIN_GAME_H
 #define MAIN_GAME_H
 
+#include <GL/gl.h> //for GLuint
+
+extern GLuint wall_texture,floor_texture;
 
 //extern void display();
 extern void setTempMaze(void);

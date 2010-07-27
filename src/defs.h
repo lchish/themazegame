@@ -1,6 +1,9 @@
 #ifndef DEFS_H_
 #define DEFS_H_
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 #ifdef __cplusplus
 extern "C" {
 #endif 

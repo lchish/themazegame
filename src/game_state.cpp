@@ -1,11 +1,9 @@
 #include <cstdio>
+#include <SDL/SDL.h>
 
 #include "game_state.h"
-
 #include "menu_state.h"
 #include "main_game.h"
-
-
 
 void set_game_state(int state_number){
 	printf("Entering state %d\n",state_number);
@@ -30,6 +28,7 @@ void set_game_state(int state_number){
 				break;
 	}
 }
+
 /* This runs the update loop for the current state */
 void gameStateUpdate(){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
@@ -38,6 +37,8 @@ void gameStateUpdate(){
 		idle();
 	}
 }
+
+//TODO currently not used!
 void gameStateReshape(int w,int h){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		//todo add a reshape for the menu?
@@ -45,6 +46,7 @@ void gameStateReshape(int w,int h){
 	  	reshape(w,h);
 	}
 }
+
 void gameStateKeyboardUp(SDLKey key){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuKeyUp(key);
@@ -52,6 +54,7 @@ void gameStateKeyboardUp(SDLKey key){
 	  inGameKeyboardUp(key);
 	}
 }
+
 void gameStateKeyboardDown(SDLKey key){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 	  menuKeyDown(key);
@@ -59,6 +62,7 @@ void gameStateKeyboardDown(SDLKey key){
 	  inGameKeyboardDown(key);
 	}
 }
+
 void gameStateRender(){
 	if(CURRENT_STATE==MENU_STATE_NUMBER){
 		menuRender();
