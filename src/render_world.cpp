@@ -5,17 +5,16 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include <SDL/SDL_mixer.h>
+
 #include "defs.h"
 #include "render_world.h"
 #include "texture.h"
 #include "main_game.h"
-
+#include "maze.h"
 
 using namespace std;
 
-
 Maze maze_render;
-
 
 /*Textures*/
 GLuint wall_texture;
@@ -203,10 +202,9 @@ void drawWalls(void){
     }
   }
 }
-
 /*Display function - called from main - This function is called as
  * often as possible - Whenever the idle loop finishes*/
-void display(void){
+void renderWorld(void){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
   camera(x_position, y_position, orientation);

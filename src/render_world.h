@@ -5,15 +5,11 @@
 
 extern void reshape(int, int);
 
-
-extern void init_textures();
-extern void free_textures();
-
 extern void drawWalls();
 extern void drawFloor();
 
 extern void setMaze(int**);
 extern void setMazeSize(int);
-
+extern void renderWorld();
 extern  void camera(int, int, int);
 #endif

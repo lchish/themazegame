@@ -1,4 +1,3 @@
-#include "maze.h"
 #ifndef MAIN_GAME_H
 #define MAIN_GAME_H
 
@@ -6,21 +5,15 @@
 
 extern GLuint wall_texture,floor_texture;
 
-//extern void display();
 extern void setTempMaze(void);
  void reshape(int w, int h);
-extern void idle();
+extern void mainGameUpdate();
 extern void myTimer(int);
-
-
-//extern Maze maze;
-
-extern void inGameKeyboardUp(SDLKey key);
-extern void inGameKeyboardDown(SDLKey key);
-extern int gameInit();
-extern int gameDeInit();
-
-extern void display();
+extern void mainGameKeyboardUp(SDLKey key);
+extern void mainGameKeyboardDown(SDLKey key);
+extern int mainGameInit();
+extern int mainGameDeInit();
+extern void mainGameRender();
 
 extern int turning_left_global;
 extern int turning_right_global;
@@ -36,6 +29,5 @@ extern int start_y;
 
 extern int end_x;
 extern int end_y;
-
 
 #endif
