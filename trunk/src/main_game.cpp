@@ -206,6 +206,8 @@ int gameInit(){
 }
 
 int gameDeInit(){
+  if(isAudioPlaying())
+    stopAllAudio();
   freeTextures();
   freeMusic();
   return 0;
