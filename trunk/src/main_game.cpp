@@ -203,8 +203,8 @@ int gameInit(){
   x_position = 0;
   y_position = 0;
   orientation = WEST;
-  end_x = 9;
-  end_y = 9;
+  end_x = 3;
+  end_y = 3;
 
   initTextures();
   initMusic();
