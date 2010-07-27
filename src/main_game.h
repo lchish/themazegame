@@ -1,3 +1,4 @@
+#include "maze.h"
 #ifndef MAIN_GAME_H
 #define MAIN_GAME_H
 
@@ -10,6 +11,9 @@ extern void setTempMaze(void);
  void reshape(int w, int h);
 extern void idle();
 extern void myTimer(int);
+
+
+//extern Maze maze;
 
 extern void inGameKeyboardUp(SDLKey key);
 extern void inGameKeyboardDown(SDLKey key);

@@ -10,13 +10,14 @@
 #include "game_state.h"
 #include "render_world.h"
 #include "defs.h"
-#include "maze.h"
 #include "audio.h"
 #include "texture.h"
 
 using namespace std;
 
 /*Our maze*/ //creates new instance
+//Maze maze;
+
 Maze maze;
 
 /* For move function */
@@ -25,18 +26,15 @@ int turning_right_global;
 int moving_fowards_global;
 
 /*Our player data structure - Where we are in the world */
-int x_position;
-int y_position;
+int x_position = 0;
+int y_position = 0;
 int orientation;
 
 /*Where we start*/
 int start_x = 0;
 int start_y = 0;
-int end_x;
-int end_y;
-
-/*Textures*/
-GLuint wall_texture,floor_texture;
+int end_x = 0;
+int end_y = 3;
 
 /*Music*/
 Mix_Music *world_music;
@@ -50,7 +48,10 @@ void move(){
 	printf("No");
       }
       else{
+	if(y_position < 2){
 	y_position++;
+	}
+      
       }
     }
     if(orientation == SOUTH){
@@ -58,46 +59,52 @@ void move(){
 	printf("No");
       }
       else{
+	if(y_position > 0){
 	y_position--;
+	}
       }
     }
+
     if(orientation == EAST){
-      if(maze.value_at(x_position, y_position, EAST) != 0){
-	printf("No");
-      }
-      else{
-	x_position++;
-      }
-    }
-    if(orientation == WEST){
       if(maze.value_at(x_position, y_position, WEST) != 0){
 	printf("No");
       }
       else{
+	if(x_position > 0){
 	x_position--;
+	}
       }
     }
-    
-  }
-  
-  if(turning_right_global){
-    if(orientation == 0){
-      orientation = 3;
+      
+    if(orientation == WEST){
+    if(maze.value_at(x_position, y_position, EAST) != 0){
+	printf("No");
+      }
+      else{
+	if(x_position < 2){
+	x_position++;
+	}
+      }
     }
-    else{
-      orientation--;
-    }
   }
-  if(turning_left_global){
-    if(orientation == 3){
-      orientation = 0;
+
+
+ else if(turning_right_global){
+    if(orientation == WEST){
+      orientation = NORTH;
     }
     else{
       orientation++;
     }
-    
   }
-  
+ else if(turning_left_global){
+    if(orientation == NORTH){
+      orientation = WEST ;
+    }
+    else{
+      orientation--;
+    } 
+  }
   if(orientation == SOUTH){
   printf("%d %d SOUTH\n", x_position, y_position);
   }
@@ -193,11 +200,11 @@ static void freeMusic(){
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
 int gameInit(){
-  x_position = start_x;
-  y_position = start_y;
+  x_position = 0;
+  y_position = 0;
   orientation = WEST;
-  end_x = 3;
-  end_y = 4;
+  end_x = 9;
+  end_y = 9;
 
   initTextures();
   initMusic();
@@ -212,3 +219,6 @@ int gameDeInit(){
   freeMusic();
   return 0;
 }
+
+
+
