@@ -1,24 +1,17 @@
-using namespace std;
-
-
 #include <cstdio>
 #include <cstdlib>
-
 #include <list>
+#include <ctime>
 
 #include "maze.h"
 #include "defs.h"
 
-#include <time.h>
-
-
+using namespace std;
 
 //mazes are now 3d. Third dimension is walls.
  Maze::Maze(){
-
    heightv = 10;
    widthv = 10;
-
 
    for(int i = 0; i < heightv; i++){
      for(int j = 0; j < widthv; j++){
@@ -28,12 +21,6 @@ using namespace std;
        maze[i][j][WEST] = 1;
      }
    }
-
-
- 
-
-
-
    
    //maze[0][0][SOUTH] = 0;
    //maze[0][0][EAST] = 0;

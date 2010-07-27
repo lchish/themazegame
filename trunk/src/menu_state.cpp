@@ -10,15 +10,14 @@
 
 GLuint start_button_texture,exit_button_texture,options_button_texture,
   header_texture;
-Mix_Music *test_sound;
+Mix_Music *menu_music;
+
 void menuKeyUp(SDLKey key){
   if(key == 'm'){
     set_game_state(GAME_STATE_NUMBER);
   }
-  if(key == 's'){
-    playAudio(test_sound,-1);
-  }
 }
+
 void menuKeyDown(SDLKey key){
 	
 }
@@ -27,13 +26,16 @@ static void menu_init_textures(){
   header_texture = genTexture("data/images/menu/title.png");
   start_button_texture = genTexture("data/images/menu/start.png");
 }
+
 static void menu_free_textures(){
   glDeleteTextures( 1, &header_texture);
   glDeleteTextures( 1, &start_button_texture);
 }
+
 void menuUpdate(){
 
 }
+
 void menuRender(){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glColor3f(0.5f,0.5f,0.5f);
@@ -50,11 +52,12 @@ void menuRender(){
   SDL_GL_SwapBuffers();
 }
 
-void menu_init_sounds(){
-  test_sound = loadAudioFile("data/audio/music/test.ogg");
+static void menu_init_sounds(){
+  //when I create a music file will put it in here
+  //we'll also need to start it here I think
 }
-void menu_free_sounds(){
-  unloadAudioFile(test_sound);
+static void menu_free_sounds(){
+  //ditto also stop it
 }
 int menuInit(){
   menu_init_textures();

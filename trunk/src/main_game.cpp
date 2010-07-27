@@ -2,30 +2,27 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL/SDL_mixer.h>
 
 #include "main_game.h"
 #include "game_state.h"
-
 #include "render_world.h"
-
 #include "defs.h"
-
 #include "maze.h"
+#include "audio.h"
+#include "texture.h"
 
 using namespace std;
 
 /*Our maze*/ //creates new instance
 Maze maze;
 
-
 /* For move function */
 int turning_left_global;
 int turning_right_global;
 int moving_fowards_global;
-
 
 /*Our player data structure - Where we are in the world */
 int x_position;
@@ -35,10 +32,14 @@ int orientation;
 /*Where we start*/
 int start_x = 0;
 int start_y = 0;
-
 int end_x;
 int end_y;
 
+/*Textures*/
+GLuint wall_texture,floor_texture;
+
+/*Music*/
+Mix_Music *world_music;
 
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
@@ -110,8 +111,6 @@ if(orientation == WEST){
   printf("%d %d WEST\n", x_position, y_position);
   }
 
-
-
   /*If these aren't reset the player races off at the speed of light*/
   moving_fowards_global = 0;
   turning_left_global = 0;
@@ -135,7 +134,6 @@ void inGameKeyboardUp(SDLKey key)
 
 }
 
-
 /*Called when a key is held down*/
 void inGameKeyboardDown(SDLKey key){
   if(key == SDLK_LEFT){
@@ -151,14 +149,9 @@ void inGameKeyboardDown(SDLKey key){
   }
 }
 
-
-
-
 /*Our main game function.. checks for input, moves and redraws the screen.
 
-  Needs to be changed to a timer function later so it dosen't hog 100%cpu, and
-  also needs to be moved to main_game*/
-
+  TODO: Needs to be changed to a timer function later so it dosen't hog 100%cpu */
 void idle(void){
 
   if(turning_left_global == true || turning_right_global == true
@@ -176,29 +169,44 @@ void idle(void){
 }
 
 
+/*Leslies code*/
+static void initTextures(){
+  wall_texture = genTexture("data/images/textures/wall.bmp");
+  floor_texture = genTexture("data/images/textures/floor.bmp");
+}
+
+static void freeTextures(){
+  glDeleteTextures( 1, &wall_texture);
+  glDeleteTextures(1, &floor_texture);
+}
+
+static void initMusic(){
+  world_music = loadAudioFile("data/audio/music/test.ogg");
+  //might as well start it playing
+  //if(music_on)
+  playAudio(world_music,-1);//-1 loops forever
+}
+
+static void freeMusic(){                                                                                                                                                            
+  unloadAudioFile(world_music);                                                                                                                                                      
+}
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
 int gameInit(){
-
   x_position = start_x;
   y_position = start_y;
   orientation = WEST;
-  
   end_x = 3;
   end_y = 4;
 
-
-  init_textures();
-
-
-  reshape(800, 600);
-
-  //reshape(wid, hei);
-
+  initTextures();
+  initMusic();
+  reshape(SCREEN_WIDTH,SCREEN_HEIGHT);
   return 0;
 }
 
 int gameDeInit(){
-  free_textures();
+  freeTextures();
+  freeMusic();
   return 0;
 }
