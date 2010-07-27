@@ -9,11 +9,19 @@
 #include "render_world.h"
 #include "texture.h"
 #include "main_game.h"
-#include "maze.h"
+
 
 using namespace std;
 
+
 Maze maze_render;
+
+
+/*Textures*/
+GLuint wall_texture;
+GLuint floor_texture;
+
+//Maze maze_render;
 
 void set_maze(Maze target){
   maze_render = target;
@@ -25,19 +33,27 @@ void camera(int x, int z, int orientation){
     gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, z+1, 0, 1, 0); 
   }
   else if(orientation == EAST){
-    gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 1, 0.5, z + 0.5, 0, 1, 0); 
+   
+    gluLookAt(x + 0.5, 0.5 , z + 0.5,-x-1, 0.5, z + 0.5, 0, 1, 0); 
   }
   else if(orientation == SOUTH){
     gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 0.5, 0.5, 0-z, 0, 1, 0); 
   }
   ///change
   else if(orientation == WEST){
-    gluLookAt(x + 0.5, 0.5 , z + 0.5,-x-1, 0.5, z + 0.5, 0, 1, 0); 
+
+ gluLookAt(x + 0.5, 0.5 , z + 0.5,x + 1, 0.5, z + 0.5, 0, 1, 0); 
   }
 }
 
 /*Draw a single floor tile*/
 void drawFloorTile(int i, int j){
+
+  if(i == end_x && j == end_y){
+    glColor3f(1.0, 0.0, 0.0);
+  }
+
+
 
   glBindTexture( GL_TEXTURE_2D, floor_texture );
   glBegin(GL_QUADS);	
@@ -49,6 +65,8 @@ void drawFloorTile(int i, int j){
 
   glTexCoord3d(0.0, 0.0, 0.0);glVertex3f(0.0f + i,0.0f, 0.0f + j);
   glEnd();
+
+  glColor3f(1.0, 1.0, 1.0);
 
 }
 

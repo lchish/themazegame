@@ -1,3 +1,5 @@
+#ifndef MAZE_H
+#define MAZE_H
 class Maze{
 
 public:
@@ -7,9 +9,9 @@ public:
   int width();
   Maze();//generate random maze
   //Maze(FILE file);//generate maze from file
+  int maze[3][3][4];
 
-private:
-  int maze[10][10][4];
+ private:
   int heightv;
   int widthv;
 
@@ -17,3 +19,5 @@ private:
   int current_y;
 
 };
+
+#endif
