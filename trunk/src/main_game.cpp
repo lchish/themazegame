@@ -12,6 +12,7 @@
 #include "defs.h"
 #include "audio.h"
 #include "texture.h"
+#include "maze.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ bool music_on = true;
 
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
-void move(){
+static void move(){
   if(moving_fowards_global){
     if(orientation == NORTH){
       if(maze.value_at(x_position, y_position, NORTH) != 0){
@@ -50,7 +51,7 @@ void move(){
       }
       else{
 	if(y_position < 2){
-	y_position++;
+	  y_position++;
 	}
       
       }
@@ -61,7 +62,7 @@ void move(){
       }
       else{
 	if(y_position > 0){
-	y_position--;
+	  y_position--;
 	}
       }
     }
@@ -72,25 +73,25 @@ void move(){
       }
       else{
 	if(x_position > 0){
-	x_position--;
+	  x_position--;
 	}
       }
     }
       
     if(orientation == WEST){
-    if(maze.value_at(x_position, y_position, EAST) != 0){
+      if(maze.value_at(x_position, y_position, EAST) != 0){
 	printf("No");
       }
       else{
 	if(x_position < 2){
-	x_position++;
+	  x_position++;
 	}
       }
     }
   }
 
 
- else if(turning_right_global){
+  else if(turning_right_global){
     if(orientation == WEST){
       orientation = NORTH;
     }
@@ -98,7 +99,7 @@ void move(){
       orientation++;
     }
   }
- else if(turning_left_global){
+  else if(turning_left_global){
     if(orientation == NORTH){
       orientation = WEST ;
     }
@@ -107,16 +108,16 @@ void move(){
     } 
   }
   if(orientation == SOUTH){
-  printf("%d %d SOUTH\n", x_position, y_position);
+    printf("%d %d SOUTH\n", x_position, y_position);
   }
-if(orientation == NORTH){
-  printf("%d %d NORTH\n", x_position, y_position);
+  if(orientation == NORTH){
+    printf("%d %d NORTH\n", x_position, y_position);
   }
-if(orientation == EAST){
-  printf("%d %d EAST\n", x_position, y_position);
+  if(orientation == EAST){
+    printf("%d %d EAST\n", x_position, y_position);
   }
-if(orientation == WEST){
-  printf("%d %d WEST\n", x_position, y_position);
+  if(orientation == WEST){
+    printf("%d %d WEST\n", x_position, y_position);
   }
 
   /*If these aren't reset the player races off at the speed of light*/
@@ -126,7 +127,7 @@ if(orientation == WEST){
 }
 
 /*Called when a key is released*/
-void inGameKeyboardUp(SDLKey key)
+void mainGameKeyboardUp(SDLKey key)
 {
 
   if (key == SDLK_LEFT){
@@ -145,7 +146,7 @@ void inGameKeyboardUp(SDLKey key)
 }
 
 /*Called when a key is held down*/
-void inGameKeyboardDown(SDLKey key){
+void mainGameKeyboardDown(SDLKey key){
   if(key == SDLK_LEFT){
     turning_left_global = true;
   }
@@ -162,7 +163,7 @@ void inGameKeyboardDown(SDLKey key){
 /*Our main game function.. checks for input, moves and redraws the screen.
 
   TODO: Needs to be changed to a timer function later so it dosen't hog 100%cpu */
-void idle(void){
+void mainGameUpdate(void){
 
   if(turning_left_global == true || turning_right_global == true
      || moving_fowards_global == true){
@@ -184,6 +185,11 @@ void idle(void){
   }
 }
 
+/*Display function - called from main - This function is called as
+ * often as possible - Whenever the idle loop finishes*/
+void mainGameRender(void){
+  renderWorld();
+}
 
 /*Leslies code*/
 static void initTextures(){
@@ -209,7 +215,7 @@ static void freeMusic(){
 
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
-int gameInit(){
+int mainGameInit(){
   x_position = 0;
   y_position = 0;
   orientation = WEST;
@@ -222,7 +228,7 @@ int gameInit(){
   return 0;
 }
 
-int gameDeInit(){
+int mainGameDeInit(){
   if(isAudioPlaying())
     stopAllAudio();
   freeTextures();
