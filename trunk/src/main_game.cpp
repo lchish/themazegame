@@ -224,6 +224,16 @@ int mainGameInit(){
 
   initTextures();
   initMusic();
+
+
+
+  //added to latest
+  glEnable(GL_COLOR_MATERIAL);
+   glEnable(GL_LIGHTING);
+   glEnable(GL_SMOOTH);
+
+
+
   reshape(SCREEN_WIDTH,SCREEN_HEIGHT);
   return 0;
 }
