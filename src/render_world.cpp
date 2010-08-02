@@ -207,6 +207,12 @@ void drawWalls(void){
 void renderWorld(void){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
+
+
+  glLightfv(0, 1, 0);
+  glEnable(GL_LIGHT0);
+
+
   camera(x_position, y_position, orientation);
 
   drawFloor(); 
