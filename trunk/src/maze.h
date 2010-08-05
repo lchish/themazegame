@@ -9,7 +9,7 @@ public:
   int width();
   Maze();//generate random maze
   //Maze(FILE file);//generate maze from file
-  int maze[3][3][4];
+  int maze[8][8][4];
 
  private:
   int heightv;

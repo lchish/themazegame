@@ -1,3 +1,21 @@
+/***********************************************
+ ***********************************************
+
+WARNING
+WARNING
+WARNING
+
+GOT WEIRD PROBLEM HAPPENING WHERE IF TURNING_LEFT_GLOBAL, RIGHT_GLOBAL.. AND MOVING_FOWARDS...
+if they are initially set to 0, they get set to 1. So setting to -1 for now.*/
+
+
+/*WARNING WARNING
+
+WARNING
+
+WARNING*/
+/************************************************************************************************/
+
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -22,9 +40,9 @@ using namespace std;
 Maze maze;
 
 /* For move function */
-int turning_left_global;
-int turning_right_global;
-int moving_fowards_global;
+ int turning_left_global = 0;
+int turning_right_global = 0;
+ int moving_fowards_global = 0;
 
 /*Our player data structure - Where we are in the world */
 int x_position = 0;
@@ -34,8 +52,9 @@ int orientation;
 /*Where we start*/
 int start_x = 0;
 int start_y = 0;
+
 int end_x = 0;
-int end_y = 3;
+int end_y = 15;
 
 /*Music*/
 Mix_Music *world_music;
@@ -44,13 +63,17 @@ bool music_on = true;
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
 static void move(){
-  if(moving_fowards_global){
+
+  printf("Moving fowards: %d \n", moving_fowards_global);
+
+
+  if(moving_fowards_global == 1){
     if(orientation == NORTH){
       if(maze.value_at(x_position, y_position, NORTH) != 0){
 	printf("No");
       }
       else{
-	if(y_position < 2){
+	if(y_position < 8){
 	  y_position++;
 	}
       
@@ -83,7 +106,7 @@ static void move(){
 	printf("No");
       }
       else{
-	if(x_position < 2){
+	if(x_position < 8){
 	  x_position++;
 	}
       }
@@ -91,7 +114,7 @@ static void move(){
   }
 
 
-  else if(turning_right_global){
+  else if(turning_right_global == 1){
     if(orientation == WEST){
       orientation = NORTH;
     }
@@ -99,7 +122,7 @@ static void move(){
       orientation++;
     }
   }
-  else if(turning_left_global){
+  else if(turning_left_global == 1){
     if(orientation == NORTH){
       orientation = WEST ;
     }
@@ -124,6 +147,7 @@ static void move(){
   moving_fowards_global = 0;
   turning_left_global = 0;
   turning_right_global = 0;
+								      
 }
 
 /*Called when a key is released*/
@@ -131,14 +155,14 @@ void mainGameKeyboardUp(SDLKey key)
 {
 
   if (key == SDLK_LEFT){
-    turning_left_global = false;
+    turning_left_global = 0;
   }
   else if(key == SDLK_RIGHT){
-    turning_right_global = false;
+    turning_right_global = 0;
   }
 
   else if(key == SDLK_UP){
-    moving_fowards_global = false;
+    moving_fowards_global = 0;
   }
   else if(key == SDLK_m){
     music_on = !music_on;
@@ -147,16 +171,20 @@ void mainGameKeyboardUp(SDLKey key)
 
 /*Called when a key is held down*/
 void mainGameKeyboardDown(SDLKey key){
+  printf("KEY\n");
+
   if(key == SDLK_LEFT){
-    turning_left_global = true;
+
+
+    turning_left_global = 1;
   }
 
   else if(key == SDLK_UP){
-    moving_fowards_global = true;
+    moving_fowards_global = 1;
   }
 
   else if(key == SDLK_RIGHT){
-    turning_right_global = true;
+    turning_right_global = 1;
   }
 }
 
@@ -165,8 +193,9 @@ void mainGameKeyboardDown(SDLKey key){
   TODO: Needs to be changed to a timer function later so it dosen't hog 100%cpu */
 void mainGameUpdate(void){
 
-  if(turning_left_global == true || turning_right_global == true
-     || moving_fowards_global == true){
+  if(turning_left_global == 1 || turning_right_global == 1
+     || moving_fowards_global == 1){
+    printf("Moving\n");
     move();
   }
   
@@ -216,15 +245,22 @@ static void freeMusic(){
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
 int mainGameInit(){
-  x_position = 0;
-  y_position = 0;
+
+
+
+   
+
+  x_position = start_x;
+  y_position = start_y;
   orientation = WEST;
-  end_x = 3;
-  end_y = 3;
+
+
+
 
   initTextures();
   initMusic();
 
+  set_maze(maze);
 
 
 
