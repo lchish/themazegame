@@ -24,6 +24,15 @@ GLuint floor_texture;
 
 void set_maze(Maze target){
   maze_render = target;
+
+
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      printf("[%d][%d]N%dE%dS%dW%d\n",i, j,  maze_render.value_at(i, j, NORTH),maze_render.value_at(i, j, EAST),maze_render.value_at(i, j, SOUTH),maze_render.value_at(i, j, WEST));
+    }
+  }
+
+
 }
 
 /*Temporary camera function - called before redrawing the graphics*/
@@ -47,6 +56,11 @@ void camera(int x, int z, int orientation){
 
 /*Draw a single floor tile*/
 void drawFloorTile(int i, int j){
+
+
+
+ 
+
 
   if(i == end_x && j == end_y){
     glColor3f(1.0, 0.0, 0.0);
@@ -122,6 +136,8 @@ void drawCube(int i, int j){
 
 /*Draw a single textured wall*/
 void drawWall(int i, int j, int direction){
+
+  
   glBindTexture( GL_TEXTURE_2D, wall_texture );
 
   if(direction == SOUTH){
@@ -183,9 +199,12 @@ void drawFloor(void){
 void drawWalls(void){
   int i, j;
 
+
+  
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
-      
+
+
 
       if(maze_render.value_at(i, j, NORTH) == 1){
 	drawWall(i, j, NORTH);
@@ -205,6 +224,8 @@ void drawWalls(void){
 /*Display function - called from main - This function is called as
  * often as possible - Whenever the idle loop finishes*/
 void renderWorld(void){
+
+ 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 

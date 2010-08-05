@@ -1,6 +1,10 @@
 #include <cstdio>
 #include <SOIL.h>
-#include <GL/glut.h>
+//#include <GL/glut.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
+
+
 #include "globals.h"
 #include "texture.h"
 
