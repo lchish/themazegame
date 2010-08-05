@@ -56,9 +56,9 @@ void drawFloorTile(int i, int j){
 
   glBindTexture( GL_TEXTURE_2D, floor_texture );
   glBegin(GL_QUADS);	
-  glTexCoord3d(0.0 , 0.0, 1.0); glVertex3f(0.0f + i, 0.0f,1.0f + j);
+  glTexCoord3d(0.0 , 1.0, 0.0); glVertex3f(0.0f + i, 0.0f,1.0f + j);
 
-  glTexCoord3d(1.0 , 0.0, 1.0); glVertex3f(1.0f + i, 0.0f,1.0f + j);
+  glTexCoord3d(1.0 , 1.0, 0.0); glVertex3f(1.0f + i, 0.0f,1.0f + j);
 
   glTexCoord3d(1.0, 0.0, 0.0); glVertex3f(1.0f + i,0.0f, 0.0f + j);
 
@@ -208,9 +208,6 @@ void renderWorld(void){
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-
-  glLightfv(0, 1, 0);
-  glEnable(GL_LIGHT0);
 
 
   camera(x_position, y_position, orientation);
