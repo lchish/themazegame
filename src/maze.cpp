@@ -801,9 +801,13 @@
 
    maze[0][0][NORTH] = 0;
    maze[0][1][SOUTH] = 0;
-
-
-
+   maze[0][1][EAST] = 0;
+   maze[1][1][WEST] = 0;
+   maze[1][1][NORTH] = 0;
+   maze[1][2][SOUTH] = 0;
+   maze[0][2][NORTH] = 0;
+   maze[1][2][EAST] = 0;
+   maze[2][2][WEST] = 0;
   //no need for malloc at the moment
 }
 
