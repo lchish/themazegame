@@ -18,6 +18,7 @@ extern void set_maze(Maze);
 extern void setMazeSize(int);
 extern void renderWorld();
 extern  void camera(int, int, int);
-void gameStateTimerFunc(int value);
+
+Uint32 gameStateTimerFunc(Uint32 interval, void *value);
 
 #endif
