@@ -3,6 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL/SDL_timer.h>
 #include <GL/glut.h>
 
 
@@ -81,7 +82,7 @@ int initGl(){
   set_game_state(MENU_STATE_NUMBER);
   /*No idea what this does?*/
   glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
-  glutTimerFunc(1, gameStateTimerFunc, 0);
+  SDL_AddTimer(1, gameStateTimerFunc, NULL);
   return 0;
 }
 
