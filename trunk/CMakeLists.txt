@@ -13,10 +13,8 @@ running instructions:
 cp build/src/themazegame .
 ./themazegame")
 
-INCLUDE(FindFreeGLUT.cmake)
 find_package(OpenGL)
 find_package(SDL)
-find_package(GLUT)
 find_package(SDL_mixer)
 
 add_subdirectory(external)
