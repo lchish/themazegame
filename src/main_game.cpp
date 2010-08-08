@@ -59,8 +59,8 @@ int orientation;
 int start_x = 0;
 int start_y = 0;
 
-int end_x = 0;
-int end_y = 15;
+int end_x = 7;
+int end_y = 1;
 
 /*Music*/
 Mix_Music *world_music;
@@ -275,6 +275,8 @@ static void initTextures(){
 
   wall_texture = genTexture(c_w_string);
   floor_texture = genTexture(c_f_string);
+  finish_texture = genTexture("data/images/textures/finish.bmp");
+
 }
 
 static void freeTextures(){

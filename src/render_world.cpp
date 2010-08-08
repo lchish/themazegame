@@ -23,6 +23,8 @@ Maze maze_render;
 GLuint wall_texture;
 GLuint floor_texture;
 
+//for finish tile. Floor only.
+GLuint finish_texture;
 
 void set_maze(Maze target){
   maze_render = target;
@@ -62,8 +64,12 @@ void drawFloorTile(int i, int j){
   }
 
 
-
+  if(i == end_x && j == end_y){
+    glBindTexture(GL_TEXTURE_2D, finish_texture);
+  }
+  else{
   glBindTexture( GL_TEXTURE_2D, floor_texture );
+  }
   glBegin(GL_QUADS);	
   glTexCoord3d(0.0 , 1.0, 0.0); glVertex3f(0.0f + i, 0.0f,1.0f + j);
 
