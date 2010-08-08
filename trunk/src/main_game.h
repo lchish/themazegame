@@ -3,7 +3,7 @@
 
 #include <GL/gl.h> //for GLuint
 
-extern GLuint wall_texture,floor_texture;
+extern GLuint wall_texture,floor_texture, finish_texture;
 
 extern void setTempMaze(void);
  void reshape(int w, int h);
