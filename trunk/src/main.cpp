@@ -3,9 +3,6 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
-#include <SDL/SDL_timer.h>
-#include <GL/glut.h>
-
 
 #include "main_game.h"
 #include "game_state.h"
@@ -13,7 +10,6 @@
 #include "globals.h"
 #include "defs.h"
 #include "audio.h"
-#include "render_world.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -40,7 +36,7 @@ int initSDL(){
     return 1;
   }
   int bpp = info->vfmt->BitsPerPixel;
-
+  
   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
   SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,24);
     if (SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, bpp,
@@ -56,7 +52,7 @@ int initSDL(){
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,true);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,4);
   }
-  //initialise SDL_mixer here to
+  //initialise SDL_mixer here to 
   if(initAudio() !=0){
     fprintf(stderr,"Something went wrong with audio initialising");
     return 1;
@@ -82,7 +78,6 @@ int initGl(){
   set_game_state(MENU_STATE_NUMBER);
   /*No idea what this does?*/
   glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
-  SDL_AddTimer(1, gameStateTimerFunc, NULL);
   return 0;
 }
 
@@ -110,28 +105,28 @@ void handleInput(){
       /** mouse stuff if we ever need it
 	  case SDL_MOUSEMOTION:
 	  MouseMoved(
-	  event.button.button,
-	  event.motion.x,
-	  event.motion.y,
-	  event.motion.xrel,
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
 	  event.motion.yrel);
 	  break;
-
+      
 	  case SDL_MOUSEBUTTONUP:
 	  MouseButtonUp(
-	  event.button.button,
-	  event.motion.x,
-	  event.motion.y,
-	  event.motion.xrel,
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
 	  event.motion.yrel);
 	  break;
-
+      
 	  case SDL_MOUSEBUTTONDOWN:
 	  MouseButtonDown(
-	  event.button.button,
-	  event.motion.x,
-	  event.motion.y,
-	  event.motion.xrel,
+	  event.button.button, 
+	  event.motion.x, 
+	  event.motion.y, 
+	  event.motion.xrel, 
 	  event.motion.yrel);
 	  break;
       */

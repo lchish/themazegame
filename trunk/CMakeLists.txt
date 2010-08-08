@@ -13,10 +13,12 @@ running instructions:
 cp build/src/themazegame .
 ./themazegame")
 
+INCLUDE_DIRECTORIES(external/SOIL external)
+link_directories(${themazegame_SOURCE_DIR}/external)
+ADD_DEFINITIONS(-Wall -g)#compiler options
+
 find_package(OpenGL)
 find_package(SDL)
 find_package(SDL_mixer)
-
 add_subdirectory(external)
 add_subdirectory(src)
-
