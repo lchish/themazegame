@@ -23,6 +23,12 @@ WARNING*/
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include <SDL/SDL_mixer.h>
+#include <ctime>
+
+
+#include <sstream>
+#include <iostream>
+
 
 #include "main_game.h"
 #include "game_state.h"
@@ -222,8 +228,53 @@ void mainGameRender(void){
 
 /*Leslies code*/
 static void initTextures(){
-  wall_texture = genTexture("data/images/textures/wall.bmp");
-  floor_texture = genTexture("data/images/textures/floor.bmp");
+
+
+  srand(time(NULL));
+
+
+  int floor_tex_num = 0;
+  int wall_tex_num = 0;
+
+  floor_tex_num = rand() % 8; //SINCE THERE ARE 8 FLOOR TEXTURES ATM.
+  wall_tex_num = rand() % 3; // 3 wall textures atm.
+
+  string w_string = "data/images/textures/w";
+
+  ostringstream oss_wall;
+  oss_wall <<wall_tex_num;
+
+  string w_num = oss_wall.str();
+
+  w_string += w_num;
+  w_string += ".bmp";
+
+
+
+
+  string f_string = "data/images/textures/f";
+
+
+  ostringstream oss_floor;
+  oss_floor << floor_tex_num;
+
+  string f_num = oss_floor.str();
+  
+  f_string += f_num;
+
+
+
+  f_string += ".bmp";
+
+  char *c_w_string = (char*)w_string.c_str();
+  char *c_f_string = (char*)f_string.c_str();
+
+  cout << c_w_string << endl;
+  cout << c_f_string << endl;
+ 
+
+  wall_texture = genTexture(c_w_string);
+  floor_texture = genTexture(c_f_string);
 }
 
 static void freeTextures(){
