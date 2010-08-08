@@ -27,13 +27,7 @@ GLuint floor_texture;
 void set_maze(Maze target){
   maze_render = target;
 
-
-  for(int i = 0; i < 8; i++){
-    for(int j = 0; j < 8; j++){
-      printf("[%d][%d]N%dE%dS%dW%d\n",i, j,  maze_render.value_at(i, j, NORTH),maze_render.value_at(i, j, EAST),maze_render.value_at(i, j, SOUTH),maze_render.value_at(i, j, WEST));
-    }
-  }
-
+}
 
 
 /*Temporary camera function - called before redrawing the graphics*/
@@ -82,56 +76,6 @@ void drawFloorTile(int i, int j){
 
   glColor3f(1.0, 1.0, 1.0);
 
-}
-
-
-void drawCube(int i, int j){
-  glBegin(GL_QUADS); 
-  glColor3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.0f + i + 0.25, 0.5f, 0.0f + j + 0.25);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.5f + i + 0.25, 0.5f, 0.0f+ j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.5f + i + 0.25, 0.0f, 0.0f+j + 0.25);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f + i + 0.25, 0.0f, 0.0f + j + 0.25);
-  glEnd();
-
-  glBegin(GL_QUADS);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f+j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f);  
-  glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f+j + 0.25);
-  glColor3f(0.0f, 1.0f, 0.0f);  
-  glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f+j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f); 
-  glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f+j + 0.25);
-  glEnd();
-  
-  
-  glBegin(GL_QUADS);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f + i + 0.25, 0.5f , 0.0f + j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f);  
-  glVertex3f(0.0f + i + 0.25, 0.5f , 0.5f + j + 0.25);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.0f + i + 0.25, 0.0f , 0.5f + j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f); 
-  glVertex3f(0.0f+ i + 0.25,  0.0f , 0.0f + j + 0.25);
-  glEnd();
-  
-  glBegin(GL_QUADS);
-  glColor3f(0.0f, 1.0f, 0.0f);
-  glVertex3f(0.5f + i + 0.25, 0.5f, 0.0f + j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.5f + i + 0.25, 0.5f , 0.5f + j + 0.25);
-  glColor3f(0.0f, 1.0f, 0.0f); 
-  glVertex3f(0.5f + i + 0.25, 0.0f , 0.5f + j + 0.25);
-  glColor3f(0.0f, 0.0f, 0.0f);
-  glVertex3f(0.5f + i + 0.25, 0.0f , 0.0f + j + 0.25);
-  glEnd();
-  
-  glColor3f(1.0, 1.0, 1.0);
 }
 
 
@@ -184,9 +128,6 @@ void drawFloor(void){
   for(i = 0; i < maze_render.width(); i++){
     for(j = 0; j < maze_render.height(); j++){
 
-
-      /*ERROR ERROR ERROR DONT LET THIS STAY IN HERE */
-     
 	drawFloorTile(i,j);
       
     }
