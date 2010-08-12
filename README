@@ -1,0 +1,23 @@
+
+LIBRARIES NEEDED
+
+Cmake
+Make
+SDL
+SDL_MIXER
+GLUT
+SOIL
+
+
+
+BUILD INSTRUCTIONS
+
+Inside the root directory, whatever you called it.. such as "themazegame", create a directory
+called build. Move to that directory and run "cmake .." This will generate a makefile.
+Do not run cmake in the root directory as it will not work. Now while still in the build
+directory, run "make". This will generate the executable. It is located in themazegame/
+build/src/ and is called themazegame. You need to copy this to the root directory for it
+to work properly, else textures will not load. 
+
+Alternatively you can run mkscript.sh in the root directory which will do this automatically.
+Then run ./themazegame to play.
