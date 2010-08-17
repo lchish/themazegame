@@ -3254,6 +3254,8 @@ int stbi_hdr_test_memory(stbi_uc const *buffer, int len)
 int stbi_hdr_test_file(FILE *f)
 {
    stbi s;
+   s.img_buffer_end = NULL;
+   s.img_buffer = NULL;
    int r,n = ftell(f);
    start_file(&s, f);
    r = hdr_test(&s);
