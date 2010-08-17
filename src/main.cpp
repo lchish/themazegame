@@ -148,6 +148,7 @@ void gameMainLoop(){
     update();
     render();
   }
+  gameStateFreeAll();
 }
 
 int main (int argc,char **argv){

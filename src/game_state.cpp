@@ -28,7 +28,13 @@ void set_game_state(int state_number){
     break;
   }
 }
-
+void gameStateFreeAll(){
+  if(CURRENT_STATE == MENU_STATE_NUMBER){
+    menuDeInit();
+  }else if(CURRENT_STATE == GAME_STATE_NUMBER){
+    mainGameDeInit();
+  }
+}
 /* This runs the update loop for the current state */
 void gameStateUpdate(){
   if(CURRENT_STATE==MENU_STATE_NUMBER){
