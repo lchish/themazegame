@@ -219,7 +219,7 @@ void mainGameUpdate(void){
     resumeAudio();
   }
 
-  SDL_Delay(10);
+ 
 }
 
 /*Display function - called from main - This function is called as
