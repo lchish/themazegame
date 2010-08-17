@@ -977,7 +977,7 @@ void check_for_GL_errors( const char *calling_location )
 }
 #endif
 
-unsigned int
+inline unsigned int
 	SOIL_internal_create_OGL_texture
 	(
 		const unsigned char *const data,
