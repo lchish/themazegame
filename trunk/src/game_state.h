@@ -13,4 +13,5 @@ void gameStateReshape(int w,int h);
 void gameStateKeyboardUp(SDLKey key);
 void gameStateKeyboardDown(SDLKey key);
 void gameStateRender();
+void gameStateFreeAll();
 #endif

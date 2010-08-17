@@ -284,6 +284,7 @@ static void initTextures(){
 static void freeTextures(){
   glDeleteTextures( 1, &wall_texture);
   glDeleteTextures(1, &floor_texture);
+  glDeleteTextures(1,&finish_texture);
 }
 
 static void initMusic(){
@@ -300,11 +301,6 @@ static void freeMusic(){
 //This code will need to be moved to main_game later.
 /*Initialization of the game*/
 int mainGameInit(){
-
-
-
-   
-
   x_position = start_x;
   y_position = start_y;
   orientation = WEST;
