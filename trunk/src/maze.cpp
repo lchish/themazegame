@@ -148,11 +148,6 @@ void Cleaner<T>::add(T *ptr)
 
 static void seedRandom();
 
-static string toString(long value);
-
-static void getLongestPath(Rooms &rooms, Room **beginPtr, Room **endPtr);
-
-
 static void init(
    int           rows,
    int           columns,
@@ -160,18 +155,6 @@ static void init(
    Walls         &walls,
    Cleaner<Room> &roomCleaner,
    Cleaner<Wall> &wallCleaner
-);
-
-static bool equalsIC(char *first, char *second);
-
-static bool getArgs(
-   int    argc,
-   char   **argv,
-   int    *rowsPtr,
-   int    *columnsPtr,
-   bool   *postScriptOutputPtr,
-   bool   *helpPtr,
-   string &errMsg
 );
 
 /*****************************************************************
@@ -273,32 +256,6 @@ static void seedRandom()
 }
 
 
-static void getLongestPath(Rooms &rooms, Room **beginPtr, Room **endPtr)
-{
-   // First, find the room that requires the longest path to
-   // reach from the cell with row = 0, column = 0.
-
-   Room *theRoom = rooms[0][0];
-   Group history;
-
-   theRoom->visit(0, history, theRoom);
-
-   Room *rFirst = theRoom->getMaxRoom();
-
-   // Now, find the room that requires the longest path to
-   // reach from 'rFirst'.  We need to clear our history
-   // so we'll be allowed to visit our neighbors again.
-
-   history.clear();
-
-   rFirst->visit(0, history, rFirst);
-
-   Room *rLast = rFirst->getMaxRoom();
-
-   *beginPtr = rFirst;
-   *endPtr   = rLast;
-}
-
 
 
 static void init(
@@ -362,8 +319,8 @@ void gen_maze()
 {
    int rows              = N_ROWS;
    int columns           = N_COLUMNS;
-   bool postScriptOutput = false;
-   bool help             = false;
+ 
+
    string errMsg         = "";
 
 
