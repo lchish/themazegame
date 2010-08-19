@@ -21,3 +21,7 @@ to work properly, else textures will not load.
 
 Alternatively you can run mkscript.sh in the root directory which will do this automatically.
 Then run ./themazegame to play.
+
+
+
+You Always start at node 0, 0 and have to reach 7, 7
