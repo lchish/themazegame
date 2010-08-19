@@ -29,6 +29,7 @@ GLuint finish_texture;
 void set_maze(Maze target){
   maze_render = target;
 
+
 }
 
 
@@ -131,8 +132,8 @@ void drawFloor(void){
 
   int i, j;
 
-  for(i = 0; i < maze_render.width(); i++){
-    for(j = 0; j < maze_render.height(); j++){
+  for(i = 0; i < N_ROWS; i++){
+    for(j = 0; j < N_COLUMNS; j++){
 
 	drawFloorTile(i,j);
       
@@ -149,8 +150,8 @@ void drawWalls(void){
 
 
   
-  for(i = 0; i < maze_render.width(); i++){
-    for(j = 0; j < maze_render.height(); j++){
+  for(i = 0; i < N_ROWS; i++){
+    for(j = 0; j < N_COLUMNS; j++){
 
 
 

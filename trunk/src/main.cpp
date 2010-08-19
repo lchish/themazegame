@@ -14,12 +14,16 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-#define DEBUG true
+#define DEBUG false
 
 /*The current game state - Menu, main game state etc...*/
 int CURRENT_STATE;
 /* Should the game be running?*/
 bool exit_game_loop = false;
+
+
+
+
 
 /* Initialise the sdl surface and set all SDL parameters */
 int initSDL(){
@@ -60,6 +64,9 @@ int initSDL(){
   return 0;
 }
 
+
+
+
 /*Initalize all the openGL state*/
 int initGl(){
   CURRENT_STATE =-1;
@@ -80,6 +87,9 @@ int initGl(){
   glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
   return 0;
 }
+
+
+
 
 void handleInput(){
   SDL_Event event;

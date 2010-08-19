@@ -1,3 +1,4 @@
+#include "defs.h"
 #ifndef MAZE_H
 #define MAZE_H
 class Maze{
@@ -9,7 +10,7 @@ public:
   int width();
   Maze();//generate random maze
   //Maze(FILE file);//generate maze from file
-  int maze[8][8][4];
+  int maze[N_ROWS][N_COLUMNS][4];
 
  private:
   int heightv;

@@ -1,20 +1,4 @@
-/***********************************************
- ***********************************************
 
-WARNING
-WARNING
-WARNING
-
-GOT WEIRD PROBLEM HAPPENING WHERE IF TURNING_LEFT_GLOBAL, RIGHT_GLOBAL.. AND MOVING_FOWARDS...
-if they are initially set to 0, they get set to 1. So setting to -1 for now.*/
-
-
-/*WARNING WARNING
-
-WARNING
-
-WARNING*/
-/************************************************************************************************/
 
 #include <cstdio>
 #include <cstdlib>
@@ -43,24 +27,25 @@ using namespace std;
 /*Our maze*/ //creates new instance
 //Maze maze;
 
-Maze maze;
+Maze  maze;
 
 /* For move function */
- int turning_left_global = 0;
+int turning_left_global = 0;
 int turning_right_global = 0;
- int moving_fowards_global = 0;
+int moving_fowards_global = 0;
 
 /*Our player data structure - Where we are in the world */
 int x_position = 0;
 int y_position = 0;
 int orientation;
 
-/*Where we start*/
-int start_x = 0;
-int start_y = 0;
 
-int end_x = 7;
-int end_y = 1;
+/*Where we start.  These constants are all from defs.h */
+int start_x = START_X;
+int start_y = START_Y;
+
+int end_x = END_X;
+int end_y = END_Y;
 
 /*Music*/
 Mix_Music *world_music;
@@ -70,51 +55,49 @@ bool music_on = true;
   on input variables such as moving_fowards_global*/
 static void move(){
 
-  printf("Moving fowards: %d \n", moving_fowards_global);
-
 
   if(moving_fowards_global == 1){
     if(orientation == NORTH){
       if(maze.value_at(x_position, y_position, NORTH) != 0){
-	printf("No");
+	////
       }
       else{
-	if(y_position < 8){
+
 	  y_position++;
-	}
+	
       
       }
     }
     if(orientation == SOUTH){
       if(maze.value_at(x_position, y_position, SOUTH) != 0){
-	printf("No");
+	////
       }
       else{
-	if(y_position > 0){
+
 	  y_position--;
-	}
+	
       }
     }
 
     if(orientation == EAST){
       if(maze.value_at(x_position, y_position, WEST) != 0){
-	printf("No");
+	////	printf("No");
       }
       else{
-	if(x_position > 0){
+
 	  x_position--;
-	}
+	
       }
     }
       
     if(orientation == WEST){
       if(maze.value_at(x_position, y_position, EAST) != 0){
-	printf("No");
+	///	printf("No");
       }
       else{
-	if(x_position < 8){
+
 	  x_position++;
-	}
+	
       }
     }
   }
@@ -135,18 +118,6 @@ static void move(){
     else{
       orientation--;
     } 
-  }
-  if(orientation == SOUTH){
-    printf("%d %d SOUTH\n", x_position, y_position);
-  }
-  if(orientation == NORTH){
-    printf("%d %d NORTH\n", x_position, y_position);
-  }
-  if(orientation == EAST){
-    printf("%d %d EAST\n", x_position, y_position);
-  }
-  if(orientation == WEST){
-    printf("%d %d WEST\n", x_position, y_position);
   }
 
   /*If these aren't reset the player races off at the speed of light*/
@@ -176,12 +147,10 @@ void mainGameKeyboardUp(SDLKey key)
 }
 
 /*Called when a key is held down*/
-void mainGameKeyboardDown(SDLKey key){
-  printf("KEY\n");
+void mainGameKeyboardDown(SDLKey key)
+{
 
   if(key == SDLK_LEFT){
-
-
     turning_left_global = 1;
   }
 
@@ -197,19 +166,20 @@ void mainGameKeyboardDown(SDLKey key){
 /*Our main game function.. checks for input, moves and redraws the screen.
 
   TODO: Needs to be changed to a timer function later so it dosen't hog 100%cpu */
-void mainGameUpdate(void){
+void mainGameUpdate(void)
+{
 
   if(turning_left_global == 1 || turning_right_global == 1
      || moving_fowards_global == 1){
-    printf("Moving\n");
     move();
   }
   
   if(x_position == end_x && y_position == end_y){
-
     printf("You win!\n");
     exit(0);
   }
+
+
   //glutPostRedisplay(); don't think there is a SDL equivalent of this
   // so taking it out.
   //check if music should be playing
@@ -231,55 +201,44 @@ void mainGameRender(void){
 /*Leslies code*/
 static void initTextures(){
 
-
   srand(time(NULL));
-
 
   int floor_tex_num = 0;
   int wall_tex_num = 0;
 
-  floor_tex_num = rand() % 8; //SINCE THERE ARE 8 FLOOR TEXTURES ATM.
-  wall_tex_num = rand() % 3; // 3 wall textures atm.
+  //get a random texture number. Texture files are called w0.bmp, f0.bmp f1.bmp and so on
+  floor_tex_num = rand() % FLOOR_TEX_COUNT; //SINCE THERE ARE 8 FLOOR TEXTURES ATM.
+  wall_tex_num = rand() % WALL_TEX_COUNT; // 3 wall textures atm.
 
-  string w_string = "data/images/textures/w";
+  string w_string = "data/images/textures/w"; //where our wall textures are located + the first character
 
-  ostringstream oss_wall;
+  ostringstream oss_wall; //used to add integer to string
   oss_wall <<wall_tex_num;
-
   string w_num = oss_wall.str();
-
   w_string += w_num;
   w_string += ".bmp";
 
-
-
-
+  //same thing for floors.
   string f_string = "data/images/textures/f";
-
-
   ostringstream oss_floor;
   oss_floor << floor_tex_num;
-
   string f_num = oss_floor.str();
-  
   f_string += f_num;
-
-
-
   f_string += ".bmp";
 
+
+  /*Turn them back into char arrays, since SDL needs these instead of strings */
   char *c_w_string = (char*)w_string.c_str();
   char *c_f_string = (char*)f_string.c_str();
 
-  cout << c_w_string << endl;
-  cout << c_f_string << endl;
- 
-
+  
+  /*Now that we have the filenames, Generate the textures*/
   wall_texture = genTexture(c_w_string);
   floor_texture = genTexture(c_f_string);
   finish_texture = genTexture("data/images/textures/finish.bmp");
-
+  
 }
+
 
 static void freeTextures(){
   glDeleteTextures( 1, &wall_texture);
@@ -298,32 +257,34 @@ static void freeMusic(){
   unloadAudioFile(world_music);
 }
 
-//This code will need to be moved to main_game later.
+
 /*Initialization of the game*/
 int mainGameInit(){
   x_position = start_x;
   y_position = start_y;
   orientation = WEST;
 
-
-
-
   initTextures();
   initMusic();
 
+  //sets this in the render file.
   set_maze(maze);
-
 
 
   reshape(SCREEN_WIDTH,SCREEN_HEIGHT);
   return 0;
+
+
 }
 
+//Free
 int mainGameDeInit(){
   if(isAudioPlaying())
     stopAllAudio();
   freeTextures();
   freeMusic();
+
+
   return 0;
 }
 
