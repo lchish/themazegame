@@ -3,7 +3,9 @@
 
 #include "maze.h"
 
+//edited by arun
 //#include <SDL/SDL.h>
+#define PI 3.1415
 
 extern void reshape(int, int);
 
@@ -16,5 +18,8 @@ extern void set_maze(Maze);
 
 extern void setMazeSize(int);
 extern void renderWorld();
-extern  void camera(int, int, int);
+//edited by arun
+//extern  void camera(double x, double z, double angleRadians);
+//added by arun
+Uint32 gameStateTimerFunc(Uint32 interval, void *value);
 #endif
