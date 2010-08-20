@@ -3,6 +3,9 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+//added by arun
+#include <SDL/SDL_timer.h>
+#include <GL/glut.h>
 
 #include "main_game.h"
 #include "game_state.h"
@@ -10,6 +13,7 @@
 #include "globals.h"
 #include "defs.h"
 #include "audio.h"
+#include "render_world.h" //added by arun
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -145,8 +149,11 @@ void handleInput(){
 }
 
 void update(){
+ SDL_Delay(5); //added by arun
   handleInput();
+  gameStateTimerFunc(5, NULL); //added by arun
   gameStateUpdate();
+
 }
 
 void render(){
