@@ -1,3 +1,6 @@
+/**
+ * Contains all widely used definitions in the maze game.
+ */
 #pragma once
 
 #define SCREEN_WIDTH 800

@@ -1,3 +1,9 @@
+/**
+ * Contains all of the audio code required for our game code.
+ * Gives us the ability to load ogg files, play them,stop them,
+ * pause them etc.
+ */
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 #include <cstdio>
@@ -6,7 +12,10 @@
 
 static bool audio_playing;
 static void musicFinished();
-//make sure you init the audio AFTER the video or else this will not work
+/* Initialises the audio buffers.
+ * Make sure you init the audio AFTER the video or else this will not work
+ * due to the way SDL initialises itself.
+ */
 int initAudio(){
   if(SDL_Init(SDL_INIT_AUDIO)!=0){
     fprintf(stderr,"Unable to initialise SDL_mixer %s\n",SDL_GetError());
@@ -23,9 +32,11 @@ int initAudio(){
   Mix_HookMusicFinished(musicFinished);
   return 0;
 }
-//loads a audio file into main memory
-//returns a pointer to the audio
-//this can only load ogg vorbis files at the moment
+
+/* Loads a audio file into main memory.
+ * Returns a pointer to the audio
+ * NOTE : this can only load ogg vorbis files 
+ */
 Mix_Music* loadAudioFile(const char *filename){
   Mix_Music *music;
   music = Mix_LoadMUS(filename);
@@ -36,7 +47,10 @@ Mix_Music* loadAudioFile(const char *filename){
     return music;
   }
 }
-//if you want infinite looping pass -1 as the number of loops
+/* Plays a audio file that has already been loaded into main mem.
+ * If you want infinite looping pass -1 as the number of loops.
+ * NOTE: doesn't check if there is audio currently playing.
+ */
 int playAudio(Mix_Music *audio,int number_of_loops){
   if(Mix_PlayMusic(audio,number_of_loops) == -1){
     fprintf(stderr,"Unable to play Ogg file: %s\n",Mix_GetError());
@@ -45,25 +59,26 @@ int playAudio(Mix_Music *audio,int number_of_loops){
   audio_playing =true;
   return 0;
 }
-//test to see if any audio files are playing
+/*test to see if any audio files are playing*/
 bool isAudioPlaying(){
   return audio_playing;
 }
 
-//frees the memory the audio file is using
+/*frees the memory the audio file is using*/
 void unloadAudioFile(Mix_Music *audio){
   Mix_FreeMusic(audio);
 }
-//called by Mix_HookMusicFinished when the audio stops playing
+
+/*called by Mix_HookMusicFinished when the audio stops playing*/
 static void musicFinished(){
   audio_playing =false;
 }
-//stops all music playing
+/*stops all music playing*/
 void stopAllAudio(){
   Mix_HaltMusic();
   audio_playing = false;
 }
-//closes the SDL_mixer session
+/*closes the SDL_mixer session*/
 void closeAudio(){
   Mix_CloseAudio();
 }

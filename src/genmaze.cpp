@@ -1,3 +1,9 @@
+/** 
+ * Generates the maze. Not particularly sure what this does as it was not
+ * written by us but it works. Used under permission from author.
+ */
+
+
 // -----------------------------------------------------------------
 // Our algorithm for creating random mazes works as follows:
 //

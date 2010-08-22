@@ -1,3 +1,7 @@
+/**
+ * If you want to change the UID of each state or add new ones put them in
+ * here.
+ */ 
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 

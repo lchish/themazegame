@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 
@@ -17,10 +16,6 @@
 int CURRENT_STATE;
 /* Should the game be running?*/
 bool exit_game_loop = false;
-
-
-
-
 
 /* Initialise the sdl surface and set all SDL parameters */
 int initSDL(){
@@ -47,22 +42,19 @@ int initSDL(){
   }
   SDL_WM_SetCaption("The maze game",0);
 
-  //anti aliasing consider letting people change this
+  /* Set up anti-aliasing */
   if(!strstr((char*)glGetString(GL_EXTENSIONS),
   	    "GL_ARB_multisample")){
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,true);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,4);
   }
-  //initialise SDL_mixer here to 
+  /* Initialise SDL_mixer here to as it will crash if initialised before sdl*/
   if(initAudio() !=0){
-    fprintf(stderr,"Something went wrong with audio initialising");
+    fprintf(stderr,"Something went wrong with initialising audio.");
     return 1;
   }
-  return 0;
+  return 0;//all good
 }
-
-
-
 
 /*Initalize all the openGL state*/
 int initGl(){
@@ -85,16 +77,13 @@ int initGl(){
   return 0;
 }
 
-
-
-
 void handleInput(){
   SDL_Event event;
   while(SDL_PollEvent(&event)){
     switch(event.type){
     case SDL_KEYDOWN:
       if(DEBUG)
-	printf("The %s key was pressed!\n",
+	fprintf(stderr,"The %s key was pressed!\n",
 	       SDL_GetKeyName(event.key.keysym.sym));
 
       if(event.key.keysym.sym == SDLK_ESCAPE){
@@ -156,11 +145,11 @@ void gameMainLoop(){
     render();
   }
   gameStateFreeAll();
+  closeAudio();
 }
 
 int main (int argc,char **argv){
   std::cout << "Starting Game" << std::endl;
-  //game code goes here
   if(initSDL()!=0)
     exit(-1);
   if(initGl()!=0)

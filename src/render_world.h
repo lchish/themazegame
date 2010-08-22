@@ -3,8 +3,6 @@
 
 #include "maze.h"
 
-//#include <SDL/SDL.h>
-
 extern void reshape(int, int);
 
 extern void drawWalls();
