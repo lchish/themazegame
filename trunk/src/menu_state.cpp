@@ -1,5 +1,7 @@
-//put some comments in here les
-// the menu
+/**
+ * This is the main menu that inits and draws the menu textures
+ * and waits for the user to start the game.
+ */
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include "game_state.h"
@@ -53,11 +55,8 @@ void menuRender(){
 }
 
 static void menu_init_sounds(){
-  //when I create a music file will put it in here
-  //we'll also need to start it here I think
 }
 static void menu_free_sounds(){
-  //ditto also stop it
 }
 int menuInit(){
   menu_init_textures();

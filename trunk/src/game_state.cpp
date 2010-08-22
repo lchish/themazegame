@@ -1,3 +1,8 @@
+/**
+ * Functions used for changing from one game state to another.
+ * For example to change from menu state -> main game state call 
+ * set game state with the main game states UID.
+ */
 #include <cstdio>
 #include <SDL/SDL.h>
 
@@ -6,8 +11,8 @@
 #include "main_game.h"
 
 void set_game_state(int state_number){
-  printf("Entering state %d\n",state_number);
-  // call the init method of the state we want
+  fprintf(stderr,"Entering state %d\n",state_number);
+  // call the init method of the state we want and deinit the current one
   if(CURRENT_STATE !=-1){
     switch(CURRENT_STATE){
     case MENU_STATE_NUMBER:
@@ -28,6 +33,7 @@ void set_game_state(int state_number){
     break;
   }
 }
+/* frees all memory used by the current game state*/
 void gameStateFreeAll(){
   if(CURRENT_STATE == MENU_STATE_NUMBER){
     menuDeInit();
@@ -43,16 +49,7 @@ void gameStateUpdate(){
     mainGameUpdate();
   }
 }
-
-//TODO currently not used!
-void gameStateReshape(int w,int h){
-  if(CURRENT_STATE==MENU_STATE_NUMBER){
-    //todo add a reshape for the menu?
-  }else if(CURRENT_STATE==GAME_STATE_NUMBER){
-    reshape(w,h);
-  }
-}
-
+/* what happens when the keyboard button is released */
 void gameStateKeyboardUp(SDLKey key){
   if(CURRENT_STATE==MENU_STATE_NUMBER){
     menuKeyUp(key);
@@ -60,7 +57,7 @@ void gameStateKeyboardUp(SDLKey key){
     mainGameKeyboardUp(key);
   }
 }
-
+/* what happens when the keyboard button is down */
 void gameStateKeyboardDown(SDLKey key){
   if(CURRENT_STATE==MENU_STATE_NUMBER){
     menuKeyDown(key);
@@ -68,7 +65,7 @@ void gameStateKeyboardDown(SDLKey key){
     mainGameKeyboardDown(key);
   }
 }
-
+/* render loop*/
 void gameStateRender(){
   if(CURRENT_STATE==MENU_STATE_NUMBER){
     menuRender();
