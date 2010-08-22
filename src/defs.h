@@ -1,7 +1,7 @@
 #pragma once
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 1024
 
 
 #define WALL_TEX_COUNT 3
@@ -23,14 +23,13 @@ extern "C" {
 #define WEST 3
 
 
-#define N_ROWS 8
-#define N_COLUMNS 3
-
+#define N_ROWS 15
+#define N_COLUMNS 15
 #define START_Y 0
 #define START_X 0
 
-#define END_X 99
-#define END_Y 99
+#define END_X 14
+#define END_Y 14
 
 
 #ifdef __cplusplus
