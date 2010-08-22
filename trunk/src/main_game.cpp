@@ -1,5 +1,3 @@
-
-
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -216,7 +214,7 @@ static void initTextures(){
   oss_wall <<wall_tex_num;
   string w_num = oss_wall.str();
   w_string += w_num;
-  w_string += ".bmp";
+  w_string += ".png";
 
   //same thing for floors.
   string f_string = "data/images/textures/f";
@@ -224,7 +222,7 @@ static void initTextures(){
   oss_floor << floor_tex_num;
   string f_num = oss_floor.str();
   f_string += f_num;
-  f_string += ".bmp";
+  f_string += ".png";
 
 
   /*Turn them back into char arrays, since SDL needs these instead of strings */
@@ -235,7 +233,7 @@ static void initTextures(){
   /*Now that we have the filenames, Generate the textures*/
   wall_texture = genTexture(c_w_string);
   floor_texture = genTexture(c_f_string);
-  finish_texture = genTexture("data/images/textures/finish.bmp");
+  finish_texture = genTexture("data/images/textures/finish.png");
   
 }
 
@@ -247,7 +245,12 @@ static void freeTextures(){
 }
 
 static void initMusic(){
-  world_music = loadAudioFile("data/audio/music/gamemusic.ogg");
+  const char *music_files[3];
+  music_files[0] = "data/audio/music/gamemusic.ogg";
+  music_files[1] = "data/audio/music/gameMusic2.ogg";
+  music_files[2] = "data/audio/music/gameMusic3.ogg";
+  srand(time(NULL));
+  world_music = loadAudioFile(music_files[rand() %3]);
   //might as well start it playing
   if(music_on) 
     playAudio(world_music,-1);//-1 loops forever

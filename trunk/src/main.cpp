@@ -11,9 +11,6 @@
 #include "defs.h"
 #include "audio.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-
 #define DEBUG false
 
 /*The current game state - Menu, main game state etc...*/

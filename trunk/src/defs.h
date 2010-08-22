@@ -5,7 +5,7 @@
 
 
 #define WALL_TEX_COUNT 3
-#define FLOOR_TEX_COUNT 8
+#define FLOOR_TEX_COUNT 7
 
 
 #ifdef __cplusplus
@@ -24,13 +24,13 @@ extern "C" {
 
 
 #define N_ROWS 8
-#define N_COLUMNS 3
+#define N_COLUMNS 8
 
 #define START_Y 0
 #define START_X 0
 
-#define END_X 99
-#define END_Y 99
+#define END_X 7
+#define END_Y 7
 
 
 #ifdef __cplusplus
