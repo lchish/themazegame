@@ -3,7 +3,6 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
-#include <SDL/SDL_timer.h>
 
 #include "main_game.h"
 #include "game_state.h"
@@ -11,7 +10,9 @@
 #include "globals.h"
 #include "defs.h"
 #include "audio.h"
-#include "render_world.h" //added by arun
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 
 #define DEBUG false
 
@@ -19,6 +20,10 @@
 int CURRENT_STATE;
 /* Should the game be running?*/
 bool exit_game_loop = false;
+
+
+
+
 
 /* Initialise the sdl surface and set all SDL parameters */
 int initSDL(){
@@ -59,6 +64,9 @@ int initSDL(){
   return 0;
 }
 
+
+
+
 /*Initalize all the openGL state*/
 int initGl(){
   CURRENT_STATE =-1;
@@ -79,6 +87,9 @@ int initGl(){
   glHint(GL_CLIP_VOLUME_CLIPPING_HINT_EXT,GL_FASTEST);
   return 0;
 }
+
+
+
 
 void handleInput(){
   SDL_Event event;
@@ -134,10 +145,8 @@ void handleInput(){
 }
 
 void update(){
- SDL_Delay(5); //added by arun
- handleInput();
- gameStateTimerFunc(5, NULL); //added by arun
- gameStateUpdate();
+  handleInput();
+  gameStateUpdate();
 }
 
 void render(){
