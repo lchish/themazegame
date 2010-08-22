@@ -1,3 +1,5 @@
+
+
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -7,8 +9,10 @@
 #include <SDL/SDL_mixer.h>
 #include <ctime>
 
+
 #include <sstream>
 #include <iostream>
+
 
 #include "main_game.h"
 #include "game_state.h"
@@ -21,6 +25,8 @@
 using namespace std;
 
 /*Our maze*/ //creates new instance
+//Maze maze;
+
 Maze  maze;
 
 /* For move function */
@@ -48,13 +54,18 @@ bool music_on = true;
 /*Modifies the players position/orientation based
   on input variables such as moving_fowards_global*/
 static void move(){
+
+
   if(moving_fowards_global == 1){
     if(orientation == NORTH){
       if(maze.value_at(x_position, y_position, NORTH) != 0){
 	////
       }
       else{
+
 	  y_position++;
+	
+      
       }
     }
     if(orientation == SOUTH){
@@ -62,26 +73,36 @@ static void move(){
 	////
       }
       else{
+
 	  y_position--;
+	
       }
     }
+
     if(orientation == EAST){
       if(maze.value_at(x_position, y_position, WEST) != 0){
 	////	printf("No");
       }
       else{
+
 	  x_position--;
+	
       }
     }
+      
     if(orientation == WEST){
       if(maze.value_at(x_position, y_position, EAST) != 0){
 	///	printf("No");
       }
       else{
+
 	  x_position++;
+	
       }
     }
   }
+
+
   else if(turning_right_global == 1){
     if(orientation == WEST){
       orientation = NORTH;
@@ -109,12 +130,14 @@ static void move(){
 /*Called when a key is released*/
 void mainGameKeyboardUp(SDLKey key)
 {
+
   if (key == SDLK_LEFT){
     turning_left_global = 0;
   }
   else if(key == SDLK_RIGHT){
     turning_right_global = 0;
   }
+
   else if(key == SDLK_UP){
     moving_fowards_global = 0;
   }
@@ -145,6 +168,7 @@ void mainGameKeyboardDown(SDLKey key)
   TODO: Needs to be changed to a timer function later so it dosen't hog 100%cpu */
 void mainGameUpdate(void)
 {
+
   if(turning_left_global == 1 || turning_right_global == 1
      || moving_fowards_global == 1){
     move();
@@ -154,12 +178,18 @@ void mainGameUpdate(void)
     printf("You win!\n");
     exit(0);
   }
+
+
+  //glutPostRedisplay(); don't think there is a SDL equivalent of this
+  // so taking it out.
   //check if music should be playing
   if(!music_on && isAudioPlaying()){
     pauseAudio();
   }else if(music_on && !isAudioPlaying()){
     resumeAudio();
   }
+
+ 
 }
 
 /*Display function - called from main - This function is called as
@@ -170,12 +200,16 @@ void mainGameRender(void){
 
 /*Leslies code*/
 static void initTextures(){
+
   srand(time(NULL));
+
   int floor_tex_num = 0;
   int wall_tex_num = 0;
+
   //get a random texture number. Texture files are called w0.bmp, f0.bmp f1.bmp and so on
   floor_tex_num = rand() % FLOOR_TEX_COUNT; //SINCE THERE ARE 8 FLOOR TEXTURES ATM.
   wall_tex_num = rand() % WALL_TEX_COUNT; // 3 wall textures atm.
+
   string w_string = "data/images/textures/w"; //where our wall textures are located + the first character
 
   ostringstream oss_wall; //used to add integer to string
@@ -192,15 +226,20 @@ static void initTextures(){
   f_string += f_num;
   f_string += ".bmp";
 
+
   /*Turn them back into char arrays, since SDL needs these instead of strings */
   char *c_w_string = (char*)w_string.c_str();
   char *c_f_string = (char*)f_string.c_str();
+
   
   /*Now that we have the filenames, Generate the textures*/
   wall_texture = genTexture(c_w_string);
   floor_texture = genTexture(c_f_string);
   finish_texture = genTexture("data/images/textures/finish.bmp");
+  
 }
+
+
 static void freeTextures(){
   glDeleteTextures( 1, &wall_texture);
   glDeleteTextures(1, &floor_texture);
@@ -208,12 +247,7 @@ static void freeTextures(){
 }
 
 static void initMusic(){
-  const char *music_files[3];
-  music_files[0] = "data/audio/music/gamemusic.ogg";
-  music_files[1] = "data/audio/music/gameMusic2.ogg";
-  music_files[2] = "data/audio/music/gameMusic3.ogg";
-  srand(time(NULL));
-  world_music = loadAudioFile(music_files[rand() %3]);
+  world_music = loadAudioFile("data/audio/music/gamemusic.ogg");
   //might as well start it playing
   if(music_on) 
     playAudio(world_music,-1);//-1 loops forever
