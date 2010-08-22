@@ -15,8 +15,6 @@
 #include "audio.h"
 #include "render_world.h" //added by arun
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
 
 #define DEBUG false
 
