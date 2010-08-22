@@ -173,7 +173,7 @@ static void initTextures(){
   oss_wall <<wall_tex_num;
   string w_num = oss_wall.str();
   w_string += w_num;
-  w_string += ".png";
+  w_string += ".tga";
 
   //same thing for floors.
   string f_string = "data/images/textures/f";
@@ -181,7 +181,7 @@ static void initTextures(){
   oss_floor << floor_tex_num;
   string f_num = oss_floor.str();
   f_string += f_num;
-  f_string += ".png";
+  f_string += ".tga";
 
   /*Turn them back into char arrays, since SDL needs these instead of strings */
   char *c_w_string = (char*)w_string.c_str();
@@ -190,7 +190,7 @@ static void initTextures(){
   /*Now that we have the filenames, Generate the textures*/
   wall_texture = genTexture(c_w_string);
   floor_texture = genTexture(c_f_string);
-  finish_texture = genTexture("data/images/textures/finish.png");
+  finish_texture = genTexture("data/images/textures/finish.tga");
 }
 
 static void freeTextures(){

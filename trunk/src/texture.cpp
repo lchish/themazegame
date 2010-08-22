@@ -32,8 +32,33 @@ GLuint genTexture(const char *filename){
      filename,
      SOIL_LOAD_AUTO,
      SOIL_CREATE_NEW_ID,
-     SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | 
-     SOIL_FLAG_NTSC_SAFE_RGB /*| SOIL_FLAG_COMPRESS_TO_DXT !causes segfault on
+      SOIL_FLAG_INVERT_Y  
+     /*SOIL_FLAG_NTSC_SAFE_RGB*/ /*| SOIL_FLAG_COMPRESS_TO_DXT !causes segfault on
+			     *lab computers*/
+     );
+
+  /* check for an error during the load process */
+  if( 0 == tex_2d )
+    {
+      fprintf(stderr,"SOIL loading error: '%s'\n", SOIL_last_result() );
+    }
+  if(anisotropic_filtering){
+    glBindTexture(GL_TEXTURE_2D,tex_2d);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAX_ANISOTROPY_EXT,
+		    max_anistropy);
+  }
+  return tex_2d;
+}
+GLuint genMipMapTexture(const char *filename){
+  /* load an image file directly as a new OpenGL texture */
+  printf("%s\n",filename);
+  GLuint tex_2d = SOIL_load_OGL_texture
+    (
+     filename,
+     SOIL_LOAD_AUTO,
+     SOIL_CREATE_NEW_ID,
+      SOIL_FLAG_INVERT_Y  | SOIL_FLAG_MIPMAPS 
+     /*SOIL_FLAG_NTSC_SAFE_RGB*/ /*| SOIL_FLAG_COMPRESS_TO_DXT !causes segfault on
 			     *lab computers*/
      );
 
