@@ -1,0 +1,16 @@
+# Introduction #
+
+Make sure you have gcc devtools, cmake, opengl, openal, SDL and SDL\_mixer all installed and ready to go and a svn client.
+
+# Details #
+
+First check out the code (svn checkout http://themazegame.googlecode.com/svn/trunk/ themazegame),
+then switch to the root directory (cd themazegame):
+  * Create a new folder build or sumn in the root directory(mkdir build)
+  * Change to the build directory (cd build)
+  * Run cmake on the root directory(cmake ..). All build specific files should be put in your build directory now.
+  * Compile the code (make)
+  * Copy the compiled executable from build/src to the root directory so the executable has access to data files (cp src/themazegame ..).
+  * Switch back to the root directory (cd ..).
+  * Enjoy (./themazegame)
+To rebuild the code remove the build folder (rm -rf build), and repeat the above.

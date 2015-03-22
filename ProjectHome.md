@@ -1,0 +1,1 @@
+So I don't have to explain to every single one of you how to run this on linux go here http://code.google.com/p/themazegame/wiki/CompilingAndRunningOnLinux
