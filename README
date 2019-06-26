@@ -11,7 +11,7 @@ SOIL
 
 
 BUILD INSTRUCTIONS
-
+Welcome to this awesome game made by this awesome dude Les!
 Inside the root directory, whatever you called it.. such as "themazegame", create a directory
 called build. Move to that directory and run "cmake .." This will generate a makefile.
 Do not run cmake in the root directory as it will not work. Now while still in the build
